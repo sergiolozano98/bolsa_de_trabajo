@@ -1,0 +1,58 @@
+{% extends 'basesimple.html.twig' %}
+
+{% block body %}
+            <!-- Menú de Ofertass --> 
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+       
+      <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{{ path('ofertas_inicio') }}"></a>
+            <a class="btn btn-outline-primary" href="{{ path('ofertas_inicio') }}"><i class="fa fa-eye"></i> Ver ofertas</a>
+            <a class="btn btn-outline-primary" href="{{ path('oferta_nueva') }}"> <i class="fa fa-pencil"></i> Crear una nueva oferta</a>
+      </nav>
+
+    </div>
+    
+    <div class="container"> 
+        <div class=" bg-white border-bottom box-shadow">
+            <h1>Buscar Oferta</h1>
+
+           {% form_theme Buscar_form 'OfertasBundle:Form:fields.html.twig' %}
+
+
+            {{ form_start(Buscar_form) }}
+            
+                {{ form_widget(Buscar_form) }}
+                <center><input type="submit" value="Buscar" class="btn btn-outline-primary" ></center><br>
+            {{ form_end(Buscar_form) }}
+        </div>
+    </div>
+            
+    <div class="container">  
+        <h1>  {{cadena}} </h1>
+        <div class="card-deck mb-4 text-center">
+         {% for oferta in ofertas %}   
+            <div class="card mb-6 box-shadow">
+                <div class="card-header titulooferta">
+                  <h4 class="my-0 font-weight-normal">{{ oferta.titulo }}</h4>
+                </div>
+                <div class="card-body">
+                  <h1 class="card-title pricing-card-title">                   
+                    {% if oferta.descripcionAlternativa|length > 0 %}
+                        {{ oferta.descripcionAlternativa }}
+                    {% else %}
+                        {{ oferta.empresa }}
+                    {% endif %}</h1>
+                  <ul class="list-unstyled mt-3 mb-4 recortado">
+                     <li> {{ oferta.descripcion }}</li>
+                  </ul>
+                  <ul class="list-unstyled mt-3 mb-4">
+                     <li> <i class="fa fa-map-marker"></i> {{ oferta.localidad }} - <i class="fa fa-calendar"></i> {{ oferta.fecha|date('d/m/Y') }}</li>
+                  </ul>
+                  <a class="btn btn-lg btn-block btn-outline-primary" href="{{ path('oferta_show', { 'id': oferta.id }) }}">  Leer mas </a>
+                </div>
+            </div><br>
+                
+        {% endfor %}
+         </div>
+    </div>
+{% endblock %}

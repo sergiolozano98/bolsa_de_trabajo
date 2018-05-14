@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Empresas lista 2</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Direccion</th>
+                <th>Cp</th>
+                <th>Localidad</th>
+                <th>Numempleados</th>
+                <th>Telefono</th>
+                <th>Pais</th>
+                <th>Url</th>
+                <th>Correo</th>
+                <th>Imagen</th>
+                <th>Cif</th>
+                <th>Observaciones</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for empresa in empresas %}
+            <tr>
+                <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                <td>{{ empresa.nombre }}</td>
+                <td>{{ empresa.descripcion }}</td>
+                <td>{{ empresa.direccion }}</td>
+                <td>{{ empresa.cP }}</td>
+                <td>{{ empresa.localidad }}</td>
+                <td>{{ empresa.numEmpleados }}</td>
+                <td>{{ empresa.telefono }}</td>
+                <td>{{ empresa.pais }}</td>
+                <td>{{ empresa.uRL }}</td>
+                <td>{{ empresa.correo }}</td>
+                <td>{{ empresa.imagen }}</td>
+                <td>{{ empresa.cIF }}</td>
+                <td>{{ empresa.observaciones }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('empresa_show', { 'id': empresa.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('empresa_edit', { 'id': empresa.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('empresa_nueva') }}">Crear una nueva empresa</a>
+        </li>
+    </ul>
+{% endblock %}

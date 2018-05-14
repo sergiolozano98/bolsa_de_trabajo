@@ -1,0 +1,33 @@
+ofertas_inicio:
+    path:     /
+    defaults: { _controller: OfertasBundle:Default:index }
+
+oferta_index:
+    path:     /otroindex
+    defaults: { _controller: "OfertasBundle:Oferta:index" }
+    methods:  GET
+
+oferta_show:
+    path:     /{id}/show
+    defaults: { _controller: "OfertasBundle:Oferta:show" }
+    methods:  GET
+
+oferta_nueva:
+    path:     /nueva
+    defaults: { _controller: "OfertasBundle:Oferta:new" }
+    methods:  [GET, POST]
+
+oferta_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "OfertasBundle:Oferta:edit" }
+    methods:  [GET, POST]
+
+oferta_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "OfertasBundle:Oferta:delete" }
+    methods:  DELETE
+
+oferta_buscar:
+    path:     /buscar
+    defaults: { _controller: "OfertasBundle:Oferta:buscar" }
+    methods:  [GET, POST]

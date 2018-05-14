@@ -1,0 +1,42 @@
+{% extends 'basesimple.html.twig' %}
+
+{% block body %}
+
+    
+    {% form_theme edit_form 'EmpresasBundle:Form:fields.html.twig' %}
+    <!-- Menú de Empresas --> 
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+       
+      <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{{ path('empresas_inicio') }}"></a>
+            <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Volver al listado</a>
+            <a class="btn btn-outline-primary" href="{{ path('empresa_nueva') }}"> <i class="fa fa-pencil"></i> Crear una nueva empresa</a>
+      </nav>  
+    </div>
+    
+    
+    <div class="container">  
+        <h1>Empresa - Modificar</h1>
+    </div>
+    <div class="container">  
+    {{ form_start(edit_form) }}
+
+        {{ form_widget(edit_form) }}
+           <div class="row">
+               <div class="col-1 ">
+                    <input class="btn btn-outline-primary" type="submit" value="Guardar" />
+               </div>
+                <div class="col-1 ">
+                   <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Ver listado</a>
+               </div>
+           </div> 
+    {{ form_end(edit_form) }}
+
+
+    {# Botón eliminar empresa **********************
+        {{ form_start(delete_form) }}
+                <input class="btn btn-outline-primary" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+    #}
+    </div>
+{% endblock %}

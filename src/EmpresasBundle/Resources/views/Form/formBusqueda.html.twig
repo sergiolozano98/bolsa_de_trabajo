@@ -1,0 +1,15 @@
+{% block form_row %}
+{% spaceless %}
+    <table>
+        <tr>
+            <td>{{ form_widget(form, {'attr': {'class': 'btn-outline-primary'}}) }}</td>
+            <td>{{ form_widget(form, {'attr': {'class': 'btn btn-outline-primary'}}) }} </td>
+        </tr> 
+    </table>
+{% endspaceless %}
+{% endblock form_row %}     
+
+
+
+
+

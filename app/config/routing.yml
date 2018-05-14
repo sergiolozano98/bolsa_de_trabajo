@@ -1,0 +1,16 @@
+
+usuarios:
+    resource: "@UsuariosBundle/Controller/"
+    type:     annotation
+
+ofertas:
+    resource: "@OfertasBundle/Resources/config/routing.yml"
+    prefix:   /ofertas
+
+empresas:
+    resource: "@EmpresasBundle/Resources/config/routing.yml"
+    prefix:   /empresas
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

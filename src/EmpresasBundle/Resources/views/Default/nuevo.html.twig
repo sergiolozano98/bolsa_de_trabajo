@@ -1,0 +1,33 @@
+{% extends 'basesimple.html.twig' %}
+
+{% block body %}
+    <h1> Nueva Empresa </h1><br>
+      
+    
+{% form_theme form 'EmpresasBundle:Form:fields.html.twig' %}
+ 
+ <div class="px-3 pt-md-6 pb-md-6 mx-auto">
+
+
+        {{ form_start(form) }}
+
+
+           {{ form_row(form.nombre) }}
+           {{ form_row(form.cIF) }}
+           {{ form_row(form.descripcion, {"required": false, "rows": "5", "cols": "50"})  }}
+           {{ form_row(form.telefono) }}
+           {{ form_widget(form) }}
+           <div class="row">
+               <div class="col-1 ">
+                    <input class="btn btn-outline-primary" type="submit" value="Guardar" />
+               </div>
+                <div class="col-1 ">
+                   <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Ver listado</a>
+               </div>
+           </div>               
+       {{ form_end(form) }}
+       
+        
+
+ </div>
+{% endblock %}

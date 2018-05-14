@@ -1,0 +1,32 @@
+Indicar en routing.yml....
+
+
+empresas_empresa:
+    resource: "@EmpresasBundle/Resources/config/routing/empresa.yml"
+    prefix:   /empresa
+
+
+empresa_index:
+    path:     /
+    defaults: { _controller: "EmpresasBundle:Empresa:index" }
+    methods:  GET
+
+empresa_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresasBundle:Empresa:show" }
+    methods:  GET
+
+empresa_nueva:
+    path:     /new
+    defaults: { _controller: "EmpresasBundle:Empresa:new" }
+    methods:  [GET, POST]
+
+empresa_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresasBundle:Empresa:edit" }
+    methods:  [GET, POST]
+
+empresa_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresasBundle:Empresa:delete" }
+    methods:  DELETE

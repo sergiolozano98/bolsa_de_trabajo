@@ -1,0 +1,133 @@
+{% extends 'basesimple.html.twig' %}
+
+{% block body %}
+    
+        <!-- Menú de Empresas --> 
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+       
+      <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{{ path('empresas_inicio') }}"></a>
+            <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Volver al listado</a>
+            <a class="btn btn-outline-primary" href="{{ path('empresa_nueva') }}"> <i class="fa fa-pencil"></i> Crear una nueva empresa</a>
+      </nav>
+      <div class="my-5 my-md-0 mr-md-3">
+        {{ form_start(busqueda) }}
+                <table>
+                    <div class="row"><div class="col-8 ">{{ form_widget(busqueda.campoBusqueda) }}</div><div class="col-8 ">{{ form_row(busqueda.Buscar) }} </div></div> 
+                </table>
+        {{ form_end(busqueda) }}
+      </div>   
+    </div>
+     <div class="container">  
+        <h1>{{ empresa.nombre }}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-10">
+                <div class="row col-md-8">
+                    <div class="col-md-2 "> Descripción </div>
+                    <div class="col-md-10 "> {{ empresa.descripcion }}<hr> </div>
+                </div>
+                
+                <div class="row  col-md-8">
+                    <div class="col-2 ">Dirección</div>
+                    <div class="col-10 ">{{ empresa.direccion }} - {{ empresa.cP }} - {{ empresa.localidad }} - {{ empresa.pais }}</div>
+                </div>
+                <div class="row  col-md-8">
+                    <div class="col-2 ">Teléfono</div>
+                    <div class="col-10 ">{{ empresa.telefono }}</div>
+                </div>
+                <div class="row  col-md-8">
+                    <div class="col-2 ">CIF</div>
+                    <div class="col-10 ">{{ empresa.cIF }}</div>
+                </div>
+                <div class="row col-md-8">
+                    <div class="col-2 ">Url</div>
+                    <div class="col-10 "><a href="http://{{empresa.uRL }} " target="blanck">{{ empresa.uRL }}</a></div>
+                </div>
+                <div class="row col-md-8">
+                    <div class="col-2 ">Correo</div>
+                    <div class="col-10 "><a href="mailto://{{empresa.uRL }} " target="blanck">{{ empresa.correo }}</a></div>
+                </div>
+                <div class="row col-md-8">
+                    <div class="col-2 ">Imagen</div>
+                    <div class="col-10 ">{{ empresa.imagen }}</div>
+                </div>
+                {% set cadena =  empresa.observaciones %}
+                {% if cadena != '' %}
+                <div class="row  col-md-8">
+                    <div class="col-2 ">Observaciones</div>
+                    <div class="col-10 ">{{ empresa.observaciones }}</div>
+                </div>
+                <br>
+                {% endif %}
+
+                <div class="row col-8">
+                    <div class="col-2 ">
+                        <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Volver</a>
+                    </div>
+                    <div class="col-2 ">
+                        <a class="btn btn-outline-primary" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                    </div>    
+                    <div class="col-2 ">    
+
+                        {{ form_start(delete_form) }}
+                            <input class="btn btn-outline-primary" type="submit" value="Borrar">
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-2">
+                <h3> Usuarios </h3>
+                
+                
+                  <ul class="list-unstyled mt-3 mb-4">
+                    {% for usuario in usuarios %}
+                     <li> {{ usuario.nombre }}</li>
+                    {% endfor %} 
+                  </ul>
+                 
+            </div>
+                  
+        </div>
+                  <br>
+     </div>
+            
+    <div class="container">  
+        <br>
+        {% if NumOfertas >0  %}
+            Ofertas Activas :{{ NumOfertas }}
+        {% else %}
+            No existen ofertas 
+        {% endif %}
+         <br>
+        <div class="card-deck mb-4 text-center">
+            
+         {% for oferta in ofertas %}   
+            <div class="card mb-6 box-shadow">
+                <div class="card-header titulooferta">
+                  <h4 class="my-0 font-weight-normal">{{ oferta.titulo }}</h4>
+                </div>
+                <div class="card-body">
+                  <h1 class="card-title pricing-card-title">                    
+                    {% if oferta.descripcionAlternativa|length > 0 %}
+                        {{ oferta.descripcionAlternativa }}
+                    {% else %}
+                        {{ oferta.empresa }}
+                    {% endif %}</h1>
+                  <ul class="list-unstyled mt-3 mb-4 recortado">
+                     <li> {{ oferta.descripcion }}</li>
+                  </ul>
+                  <ul class="list-unstyled mt-3 mb-4">
+                     <li> <i class="fa fa-map-marker"></i> {{ oferta.localidad }} - <i class="fa fa-calendar"></i> {{ oferta.fecha|date('d/m/Y') }}</li>
+                  </ul>
+                  <a class="btn btn-lg btn-block btn-outline-primary" href="{{ path('oferta_show', { 'id': oferta.id }) }}">  Leer mas </a>
+                </div>
+            </div><br>
+                
+        {% endfor %}
+         </div>
+    </div>
+   
+
+{% endblock %}

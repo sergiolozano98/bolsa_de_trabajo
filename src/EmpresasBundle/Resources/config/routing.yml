@@ -1,0 +1,34 @@
+
+
+empresas_inicio:
+    path:     /
+    defaults: { _controller: EmpresasBundle:Default:index }
+    
+empresa_listado:
+    path:     /listado
+    defaults: { _controller: EmpresasBundle:Empresas:listado}
+    
+empresa_usuario:
+    path:     /{empresa}/{usuario}/inicio
+    defaults: { _controller: "EmpresasBundle:Empresas:inicio" }
+    methods:  [GET, POST]
+    
+empresa_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresasBundle:Empresas:show" }
+    methods:  [GET, POST]
+
+empresa_nueva:
+    path:     /new
+    defaults: { _controller: "EmpresasBundle:Empresas:new" }
+    methods:  [GET, POST]
+
+empresa_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresasBundle:Empresas:edit" }
+    methods:  [GET, POST]
+
+empresa_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresasBundle:Empresas:delete" }
+    methods:  DELETE

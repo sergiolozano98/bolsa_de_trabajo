@@ -1,0 +1,18 @@
+{% extends 'basesimple.html.twig' %}
+
+{% block body %}
+    <div class="px-3 pt-md-6 pb-md-6 mx-auto">   
+        <h1>Empresa nueva (sin usar ------- )</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Crear" />
+        {{ form_end(form) }}
+
+        <ul>
+            <li>
+                <a href="{{ path('empresa_index') }}">Volver a la lista</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
