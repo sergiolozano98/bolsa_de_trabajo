@@ -1,23 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    
+<div class="parallax">  
+    {{ Tipo }} 
+    <hr>
+    <div class="col-sm-8 col-8 ">
+
 {% if error %}
+
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
-
-    <button type="submit">login</button>
-</form>
+        <form action="{{ path('login') }}" method="post">
+            <div class="form_row">
+                <label for="username">Nombre Usuario:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+             <div class="form_row">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="_password" />
+             </div>   
+            <div class=" col-3 col-sm-8" style="background-color: rgba(0, 0, 0, 0.5);">
+                <center><button class="btn btn-outline-primary" type="submit">Entrar </button>
+                <a class="btn btn-outline-primary" href="{{ path('user_registration') }}">Nuevo usuario</a></center>
+            </div>
+        </form>
+    </div>
+</div>  
+            
+    <div class="container">  
+        <h1>  {{cadena}}</h1>
+        <div class="card-deck mb-4 text-center">
+         {% for oferta in ofertas %}   
+            <div class="card mb-6 box-shadow">
+                <div class="card-header titulooferta">
+                  <h4 class="my-0 font-weight-normal">{{ oferta.titulo }}</h4>
+                </div>
+                <div class="card-body">
+                  <h1 class="card-title pricing-card-title">                    
+                    {% if oferta.descripcionAlternativa|length > 0 %}
+                        {{ oferta.descripcionAlternativa }}
+                    {% else %}
+                        {{ oferta.empresa }}
+                    {% endif %}</h1>
+                  <ul class="list-unstyled mt-3 mb-4 recortado">
+                     <li> {{ oferta.descripcion }}</li>
+                  </ul>
+                  <ul class="list-unstyled mt-3 mb-4">
+                     <li> <i class="fa fa-map-marker"></i> {{ oferta.localidad }} - <i class="fa fa-calendar"></i> {{ oferta.fecha|date('d/m/Y') }}</li>
+                  </ul>
+                  <a class="btn btn-lg btn-block btn-outline-primary" href="{{ path('oferta_show', { 'id': oferta.id }) }}">  Leer mas </a>
+                </div>
+            </div><br>
+                
+        {% endfor %}
+         </div>
+    </div>
 {% endblock %}
