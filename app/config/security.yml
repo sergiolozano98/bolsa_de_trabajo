@@ -42,10 +42,10 @@ security:
           form_login:
               login_path: /login
               check_path: /login
-              username_parameter: _email
+              username_parameter: _username
 
           logout:
-              path: /usuarios/logout
+              path: /logout
               target: /
         main:
             #anonymous: ~
@@ -61,4 +61,4 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles:[ROLE_CANDIDATO, ROLE_EDITOR, ROLE_ADMINs] }
+        - { path: ^/, roles:[ROLE_CANDIDATO, ROLE_EDITOR, ROLE_ADMIN, ROLE_USER] }
