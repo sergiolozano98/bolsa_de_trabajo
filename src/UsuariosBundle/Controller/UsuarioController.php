@@ -47,8 +47,7 @@ class UsuarioController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
+
         }
         return $this->render(
             'usuarios/register.html.twig',
@@ -58,31 +57,54 @@ class UsuarioController extends Controller
     }
 
     /**
-        * @Route("/login", name="login")
-        */
-        public function loginAction(Request $request)
-        {
-          $authenticationUtils = $this->get('security.authentication_utils');
+    * @Route("/login", name="login")
+    */
+    public function loginAction(Request $request)
+    {
+      $authenticationUtils = $this->get('security.authentication_utils');
 
-          // get the login error if there is one
-          $error = $authenticationUtils->getLastAuthenticationError();
+      // get the login error if there is one
+      $error = $authenticationUtils->getLastAuthenticationError();
+      // last username entered by the user
+      $lastUsername = $authenticationUtils->getLastUsername();
+      // Selecciona por tipo de usuario
+      if($lastUsername){
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            // Usuario con privilegios totales
 
-          // last username entered by the user
-          $lastUsername = $authenticationUtils->getLastUsername();
+        }
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_CANDIDATO')) {
+            // Candidato, sólo puede suscribirse a las ofertas
 
-          return $this->render('usuarios/login.html.twig', array(
-              'last_username' => $lastUsername,
-              'error'         => $error,
-            ));
-          }
+        }
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_EDITOR')) {
+            // Usuario de tipo empresa CON permiso para crear ofertas
+              return $this -> MuestraInicioEmpresa($lastUsername);     
+        }
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            // Usuario de tipo empresa SIN permiso para crear ofertas
 
-          /**
-          * @Route("/logout", name="logout")
-          */
-          public function logout()
-          {
-            return $this->render('usuarios/index.html.twig');
-          }
+        }
+      }       
+      
+      $Ofertas = $this->DameOfertas();
+      // Opción NO LOGEADO  
+      return $this->render('UsuariosBundle:Default:index.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+            'Tipo'          => $lastUsername,
+            'ofertas'       => $Ofertas,
+            'cadena'      => 'Ofertas'
+          ));
+      }
+
+      /**
+      * @Route("/logout", name="logout")
+      */
+      public function logout()
+      {
+        return $this->render('usuarios/index.html.twig');
+      }
 
     public function BuscaUsuarios($Id){
 
@@ -102,58 +124,28 @@ class UsuarioController extends Controller
      * **************************************************
      */
 
-    private function ResuelveConTipoUsuario($result, $form){
-        if ($result["empresa"]>=2) {
-            // Muestra el usuario de la empresa
-            return $this -> MuestraInicioEmpresa($result, $form);
-        } else {
-            return 'Candidato';
-        }
+    private function MuestraInicioEmpresa($email){
 
+            // Busca los datos del usuario registrado
+            $usuario = $this->getDoctrine()->getRepository(User::class)
+                ->findOneBy( array('email' => $email));
+            
+             $form = $this->createForm(UserType::class, $usuario);
+            
+            // Busca las ofertas de la empresa
+            $ofertas = $this->DameOfertasUsuarioEmpresa($usuario->getEmpresa());
+            $filas = count($ofertas);
+            // Falta buscar número de candidatos
 
-    }
-
-
-    private function MiraAcceso($email, $pass){
-        $id=0;
-        $empresa=-2;
-        $nombre='';
-        $frase='Usuario no encontrado';
-
-            $consulta = $this->getDoctrine()->getRepository(User::class)
-                ->findOneBy( array('username' => $email));
-            if ($consulta) {
-                // Mira si la contraseña es correcta
-                $consultaPass = $this->getDoctrine()->getRepository(User::class)
-                ->findOneBy( array('username' => $email,'pass' => $pass));
-                if ($consultaPass) {
-                    $id = $consultaPass->getId();
-                    $empresa =$consultaPass->getEmpresa();
-                    $nombre = $consultaPass->getNombre();
-                } else {
-                $frase = 'Contraseña incorrecta';
-                }
-            } else {
-                $frase = 'Usuario incorrecto';
-            }
-            // Devielve el código de usuario, empresa asociada y en su defecto el error
-            return ['id' => $id, 'empresa'=> $empresa, 'nombre'=>$nombre, 'frase' =>$frase];
-    }
-
-    private function MuestraInicioEmpresa($result,$form){
-                    $ofertas = $this->DameOfertasUsuarioEmpresa($result["empresa"]);
-                    $filas = count($ofertas);
-                    // Falta buscar número de candidatos
-
-                    return $this->render('UsuariosBundle:Default:inicio.html.twig',
-                        array('form' => $form->createView(),
-                            'nEmpresa'=>$result["empresa"],
-                            'empresa'=>$this->DameNombreEmpresa($result["empresa"]),
-                            'usuario'=>$result["id"],
-                            'nombre'=>$result["nombre"],
-                            'ofertas'=> $ofertas,
-                            'NumOfertas'=>$filas,
-                            ));
+            return $this->render('UsuariosBundle:Default:inicio.html.twig',
+                array('form' => $form->createView(),
+                    'nEmpresa'=>$usuario->getEmpresa(),
+                    'empresa'=>$this->DameNombreEmpresa($usuario->getEmpresa()),
+                    'usuario'=>$usuario->getId(),
+                    'nombre'=>$usuario->getNombre(),
+                    'ofertas'=> $ofertas,
+                    'NumOfertas'=>$filas,
+                    ));
     }
 
     private function DameNombreEmpresa($id){
@@ -175,5 +167,19 @@ class UsuarioController extends Controller
 
     }
 
+   private function DameOfertas(){
+        $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
+        $consulta = $repository->createQueryBuilder('o')
+                    ->where('o.estado  = :estado ')
+                    ->setParameter('estado', 1)
+                    ->orderBy('o.fecha', 'DESC')
+                 ->getQuery();
+                $ofertas = $consulta->getResult();
+        Return $ofertas;
+
+    }
+   
+
+       
 
 }
