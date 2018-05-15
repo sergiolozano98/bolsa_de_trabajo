@@ -49,6 +49,15 @@ class Oferta
      * @ORM\JoinColumn(name="Empresa", referencedColumnName="id")
      */
     private $empresa;
+    /**
+    * @ORM\OneToMany(targetEntity="Idioma", mappedBy="oferta")
+    */
+    private $idioma;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Estudios", mappedBy="oferta")
+    */
+    private $estudios;
 
     /**
      * @ORM\ManytoOne(targetEntity="Estado", inversedBy="oferta")
@@ -590,6 +599,54 @@ class Oferta
     public function getSalario()
     {
         return $this->salario;
+    }
+
+    /**
+     * Set idioma
+     *
+     * @param integer $idioma
+     *
+     * @return Idioma
+     */
+    public function setIdioma($idioma)
+    {
+        $this->idioma = $idioma;
+
+        return $this;
+    }
+
+    /**
+     * Get salario
+     *
+     * @return int
+     */
+    public function getIdioma()
+    {
+        return $this->idioma;
+    }
+
+    /**
+     * Set idioma
+     *
+     * @param integer $idioma
+     *
+     * @return Idioma
+     */
+    public function setEstudios($estudios)
+    {
+        $this->estudios = $estudios;
+
+        return $this;
+    }
+
+    /**
+     * Get estudios
+     *
+     * @return int
+     */
+    public function getEstudios()
+    {
+        return $this->estudios;
     }
 
     /**

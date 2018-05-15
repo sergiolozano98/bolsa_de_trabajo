@@ -79,16 +79,16 @@ class UsuarioController extends Controller
         }
         if ($this->get('security.authorization_checker')->isGranted('ROLE_EDITOR')) {
             // Usuario de tipo empresa CON permiso para crear ofertas
-              return $this -> MuestraInicioEmpresa($lastUsername);     
+              return $this -> MuestraInicioEmpresa($lastUsername);
         }
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             // Usuario de tipo empresa SIN permiso para crear ofertas
 
         }
-      }       
-      
+      }
       $Ofertas = $this->DameOfertas();
-      // Opción NO LOGEADO  
+      // Opción NO LOGEADO
+      dump($Ofertas);
       return $this->render('UsuariosBundle:Default:index.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
@@ -129,9 +129,9 @@ class UsuarioController extends Controller
             // Busca los datos del usuario registrado
             $usuario = $this->getDoctrine()->getRepository(User::class)
                 ->findOneBy( array('email' => $email));
-            
+
              $form = $this->createForm(UserType::class, $usuario);
-            
+
             // Busca las ofertas de la empresa
             $ofertas = $this->DameOfertasUsuarioEmpresa($usuario->getEmpresa());
             $filas = count($ofertas);
@@ -178,8 +178,8 @@ class UsuarioController extends Controller
         Return $ofertas;
 
     }
-   
 
-       
+
+
 
 }

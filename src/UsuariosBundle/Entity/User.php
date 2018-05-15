@@ -66,11 +66,10 @@ class User implements UserInterface
     // private $plainPassword;
 */
     /**
-    * @var string
     *
     * @ORM\Column(type="json_array")
     */
-    private $roles=array();
+    private  $roles  =  array ();
 
     /**
      * @ORM\ManyToOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="nombre")
@@ -276,9 +275,9 @@ public function setPlainPassword($password)
 
     public function getRoles()
     {
-        return array('ROLE_USER');
-    }
-    public function setRoles($roles)
+      return $this->roles;
+     }
+    public function setRoles(array $roles)
 {
     $this->roles = $roles;
 }
