@@ -29,7 +29,7 @@
     </div>
 </div>
 
-    <div class="container">
+    <div class="container"><br>
         <h1>  {{cadena}}</h1>
         <div class="card-deck mb-4 text-center">
          {% for oferta in ofertas %}
@@ -42,7 +42,7 @@
                     {% if oferta.descripcionAlternativa|length > 0 %}
                         {{ oferta.descripcionAlternativa }}
                     {% else %}
-                        {{ oferta.empresa.nombre }}
+                        {{ oferta.empresa }}
                     {% endif %}</h1>
                   <ul class="list-unstyled mt-3 mb-4 recortado">
                      <li> {{ oferta.descripcion }}</li>
