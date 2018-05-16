@@ -43,6 +43,7 @@ security:
               login_path: /login
               check_path: /login
               username_parameter: _username
+              target_path_parameter: go_to
 
           logout:
               path: /logout

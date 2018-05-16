@@ -2,9 +2,9 @@
 
 {% block body %}
 
-    <!-- Menú de Empresas --> 
+    <!-- Menú de Empresas -->
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-       
+
       <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="{{ path('empresas_inicio') }}"></a>
             <a class="p-2 text-dark" href="{{ path('empresas_inicio') }}">Ver ofertas</a>
@@ -13,19 +13,19 @@
       <a class="btn btn-outline-primary" href="#"><i class="fa fa-search"></i> Buscar Ofertas</a>
       </div>
 
-      <i class="fa fa-user"></i> {{ empresa.nombre }}<br>
+      <i class="fa fa-user"></i> {{ empresa }}<br>
         <h1><i class="fa fa-user"></i> {{ nombre }} </h1>
-        
-    <div class="container">  
+
+    <div class="container">
         <br>
         {% if NumOfertas >0  %}
-            Ofertas Activas :{{ NumOfertas }} 
+            Ofertas Activas :{{ NumOfertas }}
         {% else %}
-            No existen ofertas 
+            No existen ofertas
         {% endif %}
          <br>
-            
-         {% for oferta in ofertas %}   
+
+         {% for oferta in ofertas %}
             <div class="row">
                 <div class="col-3"> {{ oferta.titulo }}</div>
                 <div class="col-2"> {{ oferta.fecha|date('d/m/Y') }}</div>
@@ -34,7 +34,7 @@
                 <a class="btn" href="{{ path('oferta_show', { 'id': oferta.id }) }}"> <i class="fa fa-eye"></i></a>
                 <a class="btn btn" href="{{ path('oferta_edit', { 'id': oferta.id }) }}"> <i class="fa fa-edit"></i></a>
             </div>
- 
+
         {% endfor %}
          </div>
     </div>

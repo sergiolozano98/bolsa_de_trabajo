@@ -53,25 +53,29 @@ class UsuarioController extends Controller
       $error = $authenticationUtils->getLastAuthenticationError();
       // last username entered by the user
       $lastUsername = $authenticationUtils->getLastUsername();
+      //recoge todos los datos del user
+      $user = $this->get('security.token_storage')->getToken()->getUser();
       // Selecciona por tipo de usuario
-      if($lastUsername){
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            // Usuario con privilegios totales
+      if($user != 'anon.'){
+        if ($user->getRoles() == ['ROLE_ADMIN']) {
+            echo "admin";
         }
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_CANDIDATO')) {
+        if ($user->getRoles() == ['ROLE_CANDIDATO']) {
             // Candidato, sólo puede suscribirse a las ofertas
+          echo "candidato";
         }
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_EDITOR')) {
+        if ($user->getRoles() == ['ROLE_EDITOR']) {
             // Usuario de tipo empresa CON permiso para crear ofertas
-              return $this -> MuestraInicioEmpresa($lastUsername);
+            echo "editor";
+              return $this -> MuestraInicioEmpresa($user->getEmail());
         }
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+        if ($user->getRoles() == ['ROLE_USER']) {
             // Usuario de tipo empresa SIN permiso para crear ofertas
+            echo "user";
         }
       }
       $Ofertas = $this->DameOfertas();
       // Opción NO LOGEADO
-      dump($Ofertas);
       return $this->render('UsuariosBundle:Default:index.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
@@ -83,15 +87,15 @@ class UsuarioController extends Controller
       /**
       * @Route("/logout", name="logout")
       */
-      public function logout()
+      public function logoutAction()
       {
-        return $this->render('usuarios/index.html.twig');
+        return $this->render('UsuarioBundle:Default:index.html.twig');
       }
-      
+
      /**
      * Busca y muestra una oferta
      *
-     * @Route("/muestra", name="logout")
+     * @Route("/muestra", name="show")
      */
     public function showAction(Oferta $oferta)
     {
@@ -102,7 +106,7 @@ class UsuarioController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-      
+
     public function BuscaUsuarios($Id){
         $repository = $this->getdoctrine()->getRepository('UsuariosBundle:User');
         $consulta = $repository->createQueryBuilder('e')
