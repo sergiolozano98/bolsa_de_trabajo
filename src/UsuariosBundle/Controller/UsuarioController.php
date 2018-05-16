@@ -1,19 +1,14 @@
 <?php
-
 namespace UsuariosBundle\Controller;
-
 use UsuariosBundle\Form\UserType;
 use UsuariosBundle\Entity\User;
-
 use OfertasBundle\Entity\Oferta;
 use OfertasBundle\From\OfertaType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
 
 class UsuarioController extends Controller
 {
@@ -26,17 +21,12 @@ class UsuarioController extends Controller
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-
         // 2) handle the submit (will only happen on POST)
-
         $form->handleRequest($request);
         $authenticationUtils = $this->get('security.authentication_utils');
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -46,8 +36,6 @@ class UsuarioController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-
         }
         return $this->render(
             'usuarios/register.html.twig',
@@ -55,14 +43,12 @@ class UsuarioController extends Controller
           )
         );
     }
-
     /**
     * @Route("/login", name="login")
     */
     public function loginAction(Request $request)
     {
       $authenticationUtils = $this->get('security.authentication_utils');
-
       // get the login error if there is one
       $error = $authenticationUtils->getLastAuthenticationError();
       // last username entered by the user
@@ -71,11 +57,9 @@ class UsuarioController extends Controller
       if($lastUsername){
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             // Usuario con privilegios totales
-
         }
         if ($this->get('security.authorization_checker')->isGranted('ROLE_CANDIDATO')) {
             // Candidato, sólo puede suscribirse a las ofertas
-
         }
         if ($this->get('security.authorization_checker')->isGranted('ROLE_EDITOR')) {
             // Usuario de tipo empresa CON permiso para crear ofertas
@@ -83,7 +67,6 @@ class UsuarioController extends Controller
         }
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             // Usuario de tipo empresa SIN permiso para crear ofertas
-
         }
       }
       $Ofertas = $this->DameOfertas();
@@ -97,7 +80,6 @@ class UsuarioController extends Controller
             'cadena'      => 'Ofertas'
           ));
       }
-
       /**
       * @Route("/logout", name="logout")
       */
@@ -105,12 +87,24 @@ class UsuarioController extends Controller
       {
         return $this->render('usuarios/index.html.twig');
       }
+      
+     /**
+     * Busca y muestra una oferta
+     *
+     * @Route("/muestra", name="logout")
+     */
+    public function showAction(Oferta $oferta)
+    {
+        $deleteForm = $this->createDeleteForm($oferta);
 
+        return $this->render('UsuaarioBundle:Default:show.html.twig', array(
+            'oferta' => $oferta,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+      
     public function BuscaUsuarios($Id){
-
-
         $repository = $this->getdoctrine()->getRepository('UsuariosBundle:User');
-
         $consulta = $repository->createQueryBuilder('e')
             ->where('e.empresa =:empresa')
             ->setParameter('empresa', $Id)
@@ -118,25 +112,19 @@ class UsuarioController extends Controller
         $Usuario = $consulta->getResult();
         return $Usuario;
     }
-
     /* **************************************************
      * Funciones privadas
      * **************************************************
      */
-
     private function MuestraInicioEmpresa($email){
-
             // Busca los datos del usuario registrado
             $usuario = $this->getDoctrine()->getRepository(User::class)
                 ->findOneBy( array('email' => $email));
-
              $form = $this->createForm(UserType::class, $usuario);
-
             // Busca las ofertas de la empresa
             $ofertas = $this->DameOfertasUsuarioEmpresa($usuario->getEmpresa());
             $filas = count($ofertas);
             // Falta buscar número de candidatos
-
             return $this->render('UsuariosBundle:Default:inicio.html.twig',
                 array('form' => $form->createView(),
                     'nEmpresa'=>$usuario->getEmpresa(),
@@ -147,14 +135,12 @@ class UsuarioController extends Controller
                     'NumOfertas'=>$filas,
                     ));
     }
-
     private function DameNombreEmpresa($id){
         $repository = $this->getdoctrine()->getRepository('EmpresasBundle:Empresa')
                 ->find($id);
         $nombre = $repository->getNombre();
         return $nombre;
     }
-
     private function DameOfertasUsuarioEmpresa($empresa){
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
         $consulta = $repository->createQueryBuilder('o')
@@ -164,9 +150,7 @@ class UsuarioController extends Controller
                  ->getQuery();
                 $ofertas = $consulta->getResult();
         Return $ofertas;
-
     }
-
    private function DameOfertas(){
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
         $consulta = $repository->createQueryBuilder('o')
@@ -176,10 +160,5 @@ class UsuarioController extends Controller
                  ->getQuery();
                 $ofertas = $consulta->getResult();
         Return $ofertas;
-
     }
-
-
-
-
 }
