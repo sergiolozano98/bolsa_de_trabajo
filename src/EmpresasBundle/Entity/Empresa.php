@@ -23,7 +23,7 @@ class Empresa
 
     /**
     * @var string
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     * @ORM\Column(name="Nombre", type="string", length=255, nullable=true)
      * @ORM\OneToMany(targetEntity="UsuariosBundle\entity\User", mappedBy="empresa")
      */
     private $nombre;
