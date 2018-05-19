@@ -51,11 +51,6 @@ class OfertaType extends AbstractType
                         'Yes' => true,
                         'No' => false,
                     )))
-            
-                
-                
-
-                
                 ->add('salario', EntityType::class, array(
                     'class' => 'OfertasBundle:Salario',
                     'label' => 'Salario'
@@ -63,27 +58,38 @@ class OfertaType extends AbstractType
                  ->add('tipoContrato', EntityType::class, array(
                     'class' => 'OfertasBundle:Contrato',
                     'label' => 'Tipo de contrato'
-                ))        
+                ))
                 ->add('minusvalia',ChoiceType::class, array('label' => 'Minusvalía superior al 30%','required'  => false,
                     'choices'  => array(
                         'Yes' => true,
                         'No' => false,
-                    )))   
+                    )))
                 ->add('jornadaLaboral', EntityType::class, array(
                     'class' => 'OfertasBundle:JornadaLaboral',
                     'label' => 'Tipo de jornada laboral'
-                )) 
+                ))
                  ->add('beca',ChoiceType::class, array('label' => 'Beca','required'  => false,
                     'choices'  => array(
                         'Yes' => true,
                         'No' => false,
-                    )))     
-                
+                    )))
+                  ->add('categorias',EntityType::class,array(
+                      'class' => 'OfertasBundle:Categoria',
+                      'label' => 'Categoria',
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
+                  ->add('idiomas',EntityType::class,array(
+                      'class' => 'OfertasBundle:Idioma',
+                      'label' => 'Idiomas',
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
                 ;
     }
-    
 
-    
+
+
     /**
      * {@inheritdoc}
      */

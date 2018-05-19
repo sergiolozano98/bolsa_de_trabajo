@@ -49,10 +49,6 @@ class Oferta
      * @ORM\JoinColumn(name="Empresa", referencedColumnName="id")
      */
     private $empresa;
-    /**
-    * @ORM\OneToMany(targetEntity="Idioma", mappedBy="oferta")
-    */
-    private $idioma;
 
     /**
     * @ORM\OneToMany(targetEntity="Estudios", mappedBy="oferta")
@@ -179,6 +175,12 @@ class Oferta
      * @ORM\Column(name="Beneficios", type="string", length=20)
      */
     private $beneficios;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Idioma", inversedBy="ofertas")
+     * @ORM\JoinColumn(name="idiomas", referencedColumnName="id")
+     */
+    private $idiomas;
 
     /**
      * Get id
@@ -608,30 +610,6 @@ class Oferta
      *
      * @return Idioma
      */
-    public function setIdioma($idioma)
-    {
-        $this->idioma = $idioma;
-
-        return $this;
-    }
-
-    /**
-     * Get salario
-     *
-     * @return int
-     */
-    public function getIdioma()
-    {
-        return $this->idioma;
-    }
-
-    /**
-     * Set idioma
-     *
-     * @param integer $idioma
-     *
-     * @return Idioma
-     */
     public function setEstudios($estudios)
     {
         $this->estudios = $estudios;
@@ -759,6 +737,19 @@ class Oferta
 
         return $this;
     }
+    /**
+     * Set idiomas
+     *
+     * @param \OfertasBundle\Entity\Categoria $idiomas
+     *
+     * @return Oferta
+     */
+    public function setIdiomas(\OfertasBundle\Entity\Idioma $idioma = null)
+    {
+        $this->idiomas = $idioma;
+
+        return $this;
+    }
 
     /**
      * Get categorias
@@ -771,11 +762,23 @@ class Oferta
     }
 
     /**
+     * Get idiomas
+     *
+     * @return \OfertasBundle\Entity\Idioma
+     */
+    public function getIdiomas()
+    {
+        return $this->idiomas;
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->categorias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idiomas = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     /**
@@ -800,6 +803,30 @@ class Oferta
     public function removeCategoria(\OfertasBundle\Entity\Categoria $categoria)
     {
         $this->categorias->removeElement($categoria);
+    }
+
+    /**
+     * Add $idiomas
+     *
+     * @param \OfertasBundle\Entity\Idioma $idioma
+     *
+     * @return Oferta
+     */
+    public function addIdiomas(\OfertasBundle\Entity\Idioma $idioma)
+    {
+        $this->idiomas[] = $idioma;
+
+        return $this;
+    }
+
+    /**
+     * Remove idioma
+     *
+     * @param \OfertasBundle\Entity\Idioma $idioma
+     */
+    public function removeIdiomas(\OfertasBundle\Entity\Idioma $idioma)
+    {
+        $this->idiomas->removeElement($idioma);
     }
 
     private function DameUsuario($usuario){
@@ -835,6 +862,8 @@ class Oferta
             $this->conocimiento->removeElement($conocimiento);
             $conocimiento->removeUser($this);
         }
+
+
     function __toString()
     {
         return $this->provincia;

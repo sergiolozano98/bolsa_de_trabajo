@@ -112,8 +112,7 @@ class Categoria
     }
     function __toString()
     {
-        return $this->estado;
-        return $this->conocimiento;
+        return $this->categoria;
     }
 
 }

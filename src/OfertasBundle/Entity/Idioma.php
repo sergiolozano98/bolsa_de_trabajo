@@ -22,8 +22,9 @@ class Idioma
     private $id;
 
     /**
-    * @var string
-     * @ORM\Column(name="idioma", type="string")
+     * @var string
+     *
+     * @ORM\Column(name="Idioma", type="string")
      */
     private $idioma;
 
@@ -49,10 +50,10 @@ class Idioma
     private $nivel;
 
     /**
-     * @ORM\ManytoOne(targetEntity="Oferta", inversedBy="idioma")
-     * @ORM\JoinColumn(name="oferta_id", referencedColumnName="id")
-     */
-    private $oferta;
+    * @ORM\ManyToMany(targetEntity="Oferta", mappedBy="idiomas")
+    */
+   protected $ofertas;
+
 
 
     /**
@@ -71,7 +72,7 @@ class Idioma
      *
      * @return idioma
      */
-    public function setIdioma($requerido)
+    public function setIdioma($idioma)
     {
         $this->idioma = $idioma;
 
@@ -184,8 +185,49 @@ class Idioma
         return $this->estado;
     }
 
+    /**
+     * Add oferta
+     *
+     * @param \OfertasBundle\Entity\Oferta $oferta
+     *
+     * @return Categoria
+     */
+    public function addOferta(\OfertasBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas[] = $oferta;
+
+        return $this;
+    }
+
+    /**
+     * Remove oferta
+     *
+     * @param \OfertasBundle\Entity\Oferta $oferta
+     */
+    public function removeOferta(\OfertasBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas->removeElement($oferta);
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
+    }
+
+
+
     function __toString()
     {
-        return $this->estado;
+        return $this->idioma;
+    }
+
+    public function __construct()
+    {
+        $this->idioma = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }
