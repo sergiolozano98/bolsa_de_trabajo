@@ -1,7 +1,5 @@
 <?php
-
 namespace OfertasBundle\Form;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,11 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class OfertaType extends AbstractType
 {
     /**
@@ -23,7 +18,7 @@ class OfertaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titulo', TextType::class, array('label' => 'Título'))
+        $builder->add('titulo', TextType::class, array('label' => 'Título Oferta'))
                 ->add('fecha', DateType::class, array('label' => 'Fecha',
                             'empty_data'=> date_create(date('d-m-Y'))))
                 ->add('usuario')
@@ -31,12 +26,9 @@ class OfertaType extends AbstractType
                     'class' => 'OfertasBundle:Estado',
                     'label' => 'Estado'
                 ))
-                ->add('descripcion', TextareaType::class, array('label' => 'Descripción'))
+                ->add('descripcion', TextareaType::class, array('label' => 'Descripción oferta','attr' => array('rows' => '10','cols' => '10')))
                 ->add('descripcionAlternativa', TextType::class, array('label' => 'Descripción de Empresa','required'   => false))
-                ->add('puestos', NumberType::class, array('label' => 'Vacantes'))
-                ->add('beneficios', TextType::class, array('label' => 'Beneficios','required'   => false))
-
-                ->add('subCategoria', TextType::class, array('label' => 'Subcategoría','required'  => false))
+                ->add('puestos', NumberType::class, array('label' => 'Puestos vacantes'))
                 ->add('lugarCentroTrabajo', TextType::class, array('label' => 'Lugar Centro de trabajo','required'  => false))
                 ->add('provincia', EntityType::class, array(
                     'class' => 'OfertasBundle:ProvinciasOferta',
@@ -87,9 +79,6 @@ class OfertaType extends AbstractType
                   ))
                 ;
     }
-
-
-
     /**
      * {@inheritdoc}
      */
@@ -99,7 +88,6 @@ class OfertaType extends AbstractType
             'data_class' => 'OfertasBundle\Entity\Oferta'
         ));
     }
-
     /**
      * {@inheritdoc}
      */
@@ -107,6 +95,4 @@ class OfertaType extends AbstractType
     {
         return 'ofertasbundle_oferta';
     }
-
-
 }
