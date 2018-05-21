@@ -1,0 +1,200 @@
+{% extends 'basesimple.html.twig' %}
+
+
+
+{% block body %}
+    
+    <h1><i class="fa fa-user"></i> {{ nombre }} /h1>
+
+    <div class="container">
+        <div>
+        <br>
+        {% if NumOfertasActivas >0  %}
+            <div class="row">
+                <div>
+                    Ofertas Activas : {{ NumOfertasActivas }}  -
+
+                </div>
+                <div  style="text-align:center;">
+              
+                    <img src="imagenes/up.png" width=16px; id="FlechasActivas-up" class="imgcolexp"/>
+                    <img src="imagenes/down.png"  width=16px; id="FlechasActivas-down" class="imgcolexp"/>
+                </div>
+            </div>
+            <div id="OfertasActivas">
+                {% for ofertaActiva in ofertasActivas %}
+                   <div class="row">
+                       <div class="col-3"> {{ ofertaActiva.titulo }}</div>
+                       <div class="col-2"> {{ ofertaActiva.fecha|date('d/m/Y') }}</div>
+                       <div class="col-2"> {{ ofertaActiva.estado }}</div>
+                       <div class="col-2"> <i class="fa fa-group"></i> ( 20 )</div>
+                        {% if Rol == 'ROLE_ADMIN' %}
+                           <a class="btn" href="{{ path('oferta_show', { 'id': ofertaActiva.id }) }}"> <i class="fa fa-eye"></i></a>
+                           <a class="btn btn" href="{{ path('oferta_edit', { 'id': ofertaActiva.id }) }}"> <i class="fa fa-edit"></i></a>
+                        {% endif %}
+                   </div>
+
+               {% endfor %}
+            </div>
+        {% else %}
+            No existen ofertas
+        {% endif %}
+         <br>
+
+
+        </div>
+       
+        
+        <div>
+        <br>
+        {% if NumOfertasBorrador >0  %}
+            <div class="row">
+                <div>
+                    Ofertas en borradores : {{ NumOfertasBorrador }} - 
+                </div>
+                <div>
+                    <img src="imagenes/up.png" width=16px; id="Flechasborradores-up" class="imgcolexp"/>
+                    <img src="imagenes/down.png"  width=16px; id="Flechasborradores-down" class="imgcolexp"/>  
+                </div>
+            </div>
+            <div id="OfertasBorradores">
+            {% for ofertaBorrador in ofertasBorrador %}
+               <div class="row">
+                   <div class="col-3"> {{ ofertaBorrador.titulo }}</div>
+                   <div class="col-2"> {{ ofertaBorrador.fecha|date('d/m/Y') }}</div>
+                   <div class="col-2"> {{ ofertaBorrador.estado }}</div>
+                   <div class="col-2"> <i class="fa fa-group"></i> ( 20 )</div>
+                    {% if Rol == 'ROLE_ADMIN' %}
+                       <a class="btn" href="{{ path('oferta_show', { 'id': ofertaBorrador.id }) }}"> <i class="fa fa-eye"></i></a>
+                       <a class="btn btn" href="{{ path('oferta_edit', { 'id': ofertaBorrador.id }) }}"> <i class="fa fa-edit"></i></a>
+                    {% endif %}
+               </div>
+           {% endfor %}
+           </div>
+        {% endif %}
+
+        </div>
+        
+        <div>
+        <br>
+        {% if NumOfertasCerradas >0  %}
+            <div class="row">
+                <div>
+                    Ofertas Cerradas : {{ NumOfertasCerradas }} - 
+                </div>
+                <div style="text-align:center">
+                    <img src="imagenes/up.png" width=16px; id="Flechascerradas-up" class="imgcolexp"/>
+                    <img src="imagenes/down.png"  width=16px; id="Flechascerradas-down" class="imgcolexp"/>
+                </div>
+            </div>
+            <div id="OfertasCerradas">
+                {% for ofertaCerradas in ofertasCerradas %}
+                    <div class="row">
+                        <div class="col-3"> {{ ofertaCerradas.titulo }}</div>
+                        <div class="col-2"> {{ ofertaCerradas.fecha|date('d/m/Y') }}</div>
+                        <div class="col-2"> {{ ofertaCerradas.estado }}</div>
+                        <div class="col-2"> <i class="fa fa-group"></i> ( 20 )</div>
+                         {% if Rol == 'ROLE_ADMIN' %}
+                            <a class="btn" href="{{ path('oferta_show', { 'id': ofertaCerradas.id }) }}"> <i class="fa fa-eye"></i></a>
+                            <a class="btn btn" href="{{ path('oferta_edit', { 'id': ofertaCerradas.id }) }}"> <i class="fa fa-edit"></i></a>
+                         {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+         <br>
+        {% if empresa >0  %}
+            Seleccione el usuario de la empresa a suplantar. 
+            <form action="/" method='POST'>
+                <select name="usuario"> 
+                 {% for Usuarios in ListadoUsuarios %}
+                     <option value="{{ Usuarios.id }}">{{ Usuarios.nombre }}</option>
+                 {% endfor %}
+                </select>
+                <input type="hidden" name="empresa" value="{{ empresa }}">
+                <button class="btn btn-outline-primary" type="submit">seleccionar </button>
+            </form>
+        {% else %}
+            Seleccione empresa sobre la que trabajar ddd
+            <form action="/empresa2" method='POST'>
+                <select name="empresa"> 
+                 {% for Empresas in ListadoEmpresas %}
+                     <option value="{{ Empresas.id }}">{{ Empresas.nombre }}</option>
+                 {% endfor %}
+                </select>
+                <button class="btn btn-outline-primary" type="submit">seleccionar </button>
+            </form>
+        {% endif %}
+        </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$(document).ready(function(){
+        // Ofertas Activas
+        // oculta la segunda flecha y las ofertas. Estado inicial
+        
+	$("#FlechasActivas-up").css("display","none");
+        $("#FlechasActivas-down").css("display","block");
+        $("#OfertasActivas").hide();
+       	$("#Flechasborradores-up").css("display","none");
+        $("#Flechasborradores-down").css("display","block");
+        $("#OfertasBorradores").hide(); 
+        $("#Flechascerradas-up").css("display","none");
+        $("#Flechascerradas-down").css("display","block");
+        $("#OfertasCerradas").hide();
+        
+	$("#FlechasActivas-up,#FlechasActivas-down").click(function () {
+		$("#OfertasActivas").slideToggle("slow");
+
+		if($("#FlechasActivas-up").css("display") == "block")
+		{
+			$("#FlechasActivas-up").css("display","none");
+			$("#FlechasActivas-down").css("display","block");
+		}
+		else
+		{
+			$("#FlechasActivas-up").css("display","block");
+			$("#FlechasActivas-down").css("display","none");
+		}
+	});
+        // Ofertas en Borrador
+
+
+	$("#Flechasborradores-up,#Flechasborradores-down").click(function () {
+		$("#OfertasBorradores").slideToggle("slow");
+
+		if($("#Flechasborradores-up").css("display") == "block")
+		{
+			$("#Flechasborradores-up").css("display","none");
+			$("#Flechasborradores-down").css("display","block");
+		}
+		else
+		{
+			$("#Flechasborradores-up").css("display","block");
+			$("#Flechasborradores-down").css("display","none");
+		}
+	});
+        // Ofertas Cerradas
+
+
+	$("#Flechascerradas-up,#Flechascerradas-down").click(function () {
+		$("#OfertasCerradas").slideToggle("slow");
+
+		if($("#Flechascerradas-up").css("display") == "block")
+		{
+			$("#Flechascerradas-up").css("display","none");
+			$("#Flechascerradas-down").css("display","block");
+		}
+		else
+		{
+			$("#Flechascerradas-up").css("display","block");
+			$("#Flechascerradas-down").css("display","none");
+		}
+	});
+});
+</script>
+
+{% endblock %}
