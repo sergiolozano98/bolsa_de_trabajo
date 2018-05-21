@@ -18,9 +18,116 @@
         <div class=" bg-white border-bottom box-shadow">
 
             <h1>Edición de Oferta</h1>
-             {% form_theme edit_form 'OfertasBundle:Form:fields.html.twig' %}
+            {% form_theme edit_form 'OfertasBundle:Form:fields.html.twig' %}
             {{ form_start(edit_form) }}
-                {{ form_widget(edit_form) }}
+            <div class="form_row">
+                <b>{{ form_label(edit_form.titulo) }}</b>
+                {{ form_widget(edit_form.titulo) }}
+            </div>
+            <div class="form_row">
+                <b>{{ form_label(edit_form.fecha) }}</b>
+                {{ form_widget(edit_form.fecha) }}
+                {{ form_widget(edit_form.usuario,{ 'attr': {'style': 'display:none'} }) }}
+            </div>
+            <div class="form_row">
+                <b>{{ form_label(edit_form.estado) }}</b>
+                {{ form_widget(edit_form.estado) }}
+            </div>
+            <div class="form_row">
+                <b>{{ form_label(edit_form.descripcionAlternativa) }}</b> {{ form_widget(edit_form.descripcionAlternativa) }}
+            </div>
+            <div class="row">
+                <div class="col-4 "><b>Descripción oferta</b></div>
+                <div>
+                    <img src="/imagenes/up.png" width=16px; id="FlechasDescripcion-up" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasDescripcion-down" class="imgcolexp"/>  
+                </div>
+                <div class="col-8 " id="OfertasDescripcion">                
+                    {{ form_widget(edit_form.descripcion) }}
+                    <div class="col-8 form_row">
+                        <b>{{ form_label(edit_form.puestos) }}</b> {{ form_widget(edit_form.puestos) }}
+                    </div>   
+                    <div class="col-8 form_row">
+                        <b>{{ form_label(edit_form.tipoContrato) }}</b> {{ form_widget(edit_form.tipoContrato) }}
+                    </div>  
+                      <div class="col-8 form_row">
+                        <b>{{ form_label(edit_form.jornadaLaboral) }}</b> {{ form_widget(edit_form.jornadaLaboral) }}
+                    </div> 
+                </div>                   
+            </div>
+            <div class="row">
+                <div class="col-4 "><b>Opciones</b></div>
+                <div>
+                    <img src="/imagenes/up.png" width=16px; id="FlechasOpcion-up" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasOpcion-down" class="imgcolexp"/>  
+                </div>
+                <div class="col-10 " id="OfertasOpcion">  
+                    <div class="form_row">
+                         <b>{{ form_label(edit_form.salario) }}</b> {{ form_widget(edit_form.salario) }}
+                    </div>    
+                     <div class="form_row">
+                         <div>
+                            <b>{{ form_label(edit_form.experienciaSector) }}</b> 
+                       </div> 
+                       <div class="col-8"> 
+                            {{ form_widget(edit_form.experienciaSector) }}<br>
+                       </div> 
+                     </div>
+                      <br> 
+                    <div class="form_row">  
+                        <div>
+                            <b>{{ form_label(edit_form.experienciaMinima) }}</b> 
+                        </div> 
+                        <div class="col-8"> 
+                             {{ form_widget(edit_form.experienciaMinima) }}
+                        </div>   
+                    </div>
+                        <div class="form_row">
+                           <b>{{ form_label(edit_form.beca) }}</b> 
+                        </div> 
+                        <div class="col-8"> 
+                            {{ form_widget(edit_form.beca) }}
+                    </div>    
+                     <div class="col-8">
+                         <b>{{ form_label(edit_form.minusvalia) }}</b> {{ form_widget(edit_form.minusvalia) }}
+                    </div>   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 "><b>Ubicación</b></div>
+                <div>
+                    <img src="/imagenes/up.png" width=16px; id="FlechasDireccion-up" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasDireccion-down" class="imgcolexp"/>  
+                </div>
+                <div class="col-8 " id="OfertasDireccion">
+
+                    <div class="form_row">
+                         <b>{{ form_label(edit_form.lugarCentroTrabajo) }}</b> {{ form_widget(edit_form.lugarCentroTrabajo) }}
+                    </div>
+                    <div class="form_row">
+                         <b>{{ form_label(edit_form.provincia) }}</b> {{ form_widget(edit_form.provincia) }}
+                     </div>
+                    <div class="form_row">
+                         <b>{{ form_label(edit_form.localidad) }}</b> {{ form_widget(edit_form.localidad) }}
+                     </div>                
+                     <div class="form_row">
+                         <b>{{ form_label(edit_form.pais) }}</b> {{ form_widget(edit_form.pais) }}
+                     </div>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="col-4 "><b>Categorías</b></div>
+                <div>
+                    <img src="/imagenes/up.png" width=16px; id="FlechasCategorias-up" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasCategorias-down" class="imgcolexp"/>  
+                </div>
+                <div class="col-8 " id="OfertasCategoria">
+                    {{ form_widget(edit_form.categorias) }} 
+                </div>
+            </div>
+            <div class="form_row">
+                <b>{{ form_label(edit_form.idiomas) }}</b> {{ form_widget(edit_form.idiomas) }}
+            </div>
                 <center><input class="btn btn-outline-primary" type="submit" value="Guardar" /></center>
                 
             {{ form_end(edit_form) }}
@@ -36,4 +143,84 @@
         
     </div>
             
+{% endblock %}
+{% block javascripts %}
+<script>
+$(document).ready(function(){
+        // Ofertas 
+        // oculta la segunda flecha y las ofertas. Estado inicial
+        
+	$("#FlechasDescripcion-up").css("display","none");
+        $("#FlechasDescripcion-down").css("display","block");
+        $("#OfertasDescripcion").hide();
+        $("#FlechasOpcion-up").css("display","none");
+        $("#FlechasOpcion-down").css("display","block");
+        $("#OfertasOpcion").hide();
+        $("#FlechasDireccion-up").css("display","none");
+        $("#FlechasDireccion-down").css("display","block");
+        $("#OfertasDireccion").hide();
+	$("#FlechasCategorias-up").css("display","none");
+        $("#FlechasCategorias-down").css("display","block");
+        $("#OfertasCategoria").hide();
+
+        $("#FlechasDescripcion-up,#FlechasDescripcion-down").click(function () {
+		$("#OfertasDescripcion").slideToggle("slow");
+
+		if($("#FlechasDescripcion-up").css("display") == "block")
+		{
+			$("#FlechasDescripcion-up").css("display","none");
+			$("#FlechasDescripcion-down").css("display","block");
+		}
+		else
+		{
+			$("#FlechasDescripcion-up").css("display","block");
+			$("#FlechasDescripcion-down").css("display","none");
+		}
+	});
+        $("#FlechasOpcion-up,#FlechasOpcion-down").click(function () {
+		$("#OfertasOpcion").slideToggle("slow");
+
+		if($("#FlechasOpcion-up").css("display") == "block")
+		{
+			$("#FlechasOpcion-up").css("display","none");
+			$("#FlechasOpcion-down").css("display","block");
+		}
+		else
+		{
+			$("#FlechasOpcion-up").css("display","block");
+			$("#FlechasOpcion-down").css("display","none");
+		}
+	});        
+	$("#FlechasDireccion-up,#FlechasDireccion-down").click(function () {
+		$("#OfertasDireccion").slideToggle("slow");
+
+		if($("#FlechasDireccion-up").css("display") == "block")
+		{
+			$("#FlechasDireccion-up").css("display","none");
+			$("#FlechasDireccion-down").css("display","block");
+		}
+		else
+		{
+			$("#FlechasDireccion-up").css("display","block");
+			$("#FlechasDireccion-down").css("display","none");
+		}
+	});
+        
+	$("#FlechasCategorias-up,#FlechasCategorias-down").click(function () {
+		$("#OfertasCategoria").slideToggle("slow");
+
+		if($("#FlechasCategorias-up").css("display") == "block")
+		{
+			$("#FlechasCategorias-up").css("display","none");
+			$("#FlechasCategorias-down").css("display","block");
+		}
+		else
+		{
+			$("#FlechasCategorias-up").css("display","block");
+			$("#FlechasCategorias-down").css("display","none");
+		}
+	});
+});
+</script>
+
 {% endblock %}
