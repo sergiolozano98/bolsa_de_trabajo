@@ -1,11 +1,8 @@
 <?php
-
 namespace OfertasBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use UsuariosBundle\Entity\Usuario;
 use EmpresasBundle\Entity\Empresa;
-
 /**
  * Oferta
  *
@@ -22,166 +19,140 @@ class Oferta
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="Titulo", type="string", length=255)
      */
     private $titulo;
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="Fecha", type="datetime")
      */
     private $fecha;
-
     /**
      * @var int
      *
      * @ORM\Column(name="Usuario", type="integer")
      */
     private $usuario;
-
     /**
      * @ORM\ManytoOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="oferta")
      * @ORM\JoinColumn(name="Empresa", referencedColumnName="id")
      */
     private $empresa;
-
     /**
     * @ORM\OneToMany(targetEntity="Estudios", mappedBy="oferta")
     */
     private $estudios;
-
     /**
      * @ORM\ManytoOne(targetEntity="Estado", inversedBy="oferta")
      * @ORM\JoinColumn(name="estado", referencedColumnName="id")
      */
     private $estado;
-
     /**
      * @var string
      *
      * @ORM\Column(name="Descripcion", type="string", length=255)
      */
     private $descripcion;
-
     /**
      * @var string
      *
      * @ORM\Column(name="DescripcionAlternativa", type="string", length=255, nullable=true)
      */
     private $descripcionAlternativa;
-
     /**
      * @var int
      *
      * @ORM\Column(name="Puestos", type="integer")
      */
     private $puestos;
-
     /**
      * @ORM\ManyToMany(targetEntity="Categoria", inversedBy="ofertas")
      * @ORM\JoinColumn(name="categorias", referencedColumnName="id")
      */
     private $categorias;
-
     /**
      * @var string
      *
      * @ORM\Column(name="SubCategoria", type="string", length=255)
      */
     private $subCategoria;
-
     /**
      * @var string
      *
      * @ORM\Column(name="LugarCentroTrabajo", type="string", length=255)
      */
     private $lugarCentroTrabajo;
-
     /**
      * @var string
      *
      * @ORM\Column(name="Localidad", type="string", length=255)
      */
     private $localidad;
-
     /**
      * @ORM\ManytoOne(targetEntity="ProvinciasOferta", inversedBy="oferta")
      * @ORM\JoinColumn(name="provincia", referencedColumnName="id")
      */
     private $provincia;
-
     /**
      * @var string
      *
      * @ORM\Column(name="Pais", type="string", length=255)
      */
     private $pais;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="ExperienciaSector", type="boolean")
      */
     private $experienciaSector;
-
     /**
      * @var string
      *
      * @ORM\Column(name="ExperienciaMinima", type="string", length=20)
      */
     private $experienciaMinima;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="Minusvalia", type="boolean")
      */
     private $minusvalia;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="Beca", type="boolean")
      */
     private $beca;
-
     /**
      * @ORM\ManytoOne(targetEntity="Salario", inversedBy="oferta")
      * @ORM\JoinColumn(name="salario", referencedColumnName="id")
      */
     private $salario;
-
     /**
      * @ORM\ManytoOne(targetEntity="Contrato", inversedBy="oferta")
      * @ORM\JoinColumn(name="tipoContrato", referencedColumnName="id")
      */
     private $tipoContrato;
-
     /**
      * @ORM\ManytoOne(targetEntity="JornadaLaboral", inversedBy="oferta")
      * @ORM\JoinColumn(name="jornadaLaboral", referencedColumnName="id")
      */
     private $jornadaLaboral;
-
-
      /**
      * @var string
      *
      * @ORM\Column(name="Beneficios", type="string", length=20)
      */
     private $beneficios;
-
     /**
      * @ORM\ManyToMany(targetEntity="Idioma", inversedBy="ofertas")
      * @ORM\JoinColumn(name="idiomas", referencedColumnName="id")
      */
     private $idiomas;
-
     /**
      * Get id
      *
@@ -191,7 +162,6 @@ class Oferta
     {
         return $this->id;
     }
-
     /**
      * Set titulo
      *
@@ -202,10 +172,8 @@ class Oferta
     public function setTitulo($titulo)
     {
         $this->titulo = $titulo;
-
         return $this;
     }
-
     /**
      * Get titulo
      *
@@ -215,7 +183,6 @@ class Oferta
     {
         return $this->titulo;
     }
-
     /**
      * Set fecha
      *
@@ -226,10 +193,8 @@ class Oferta
     public function setFecha($fecha)
     {
         $this->fecha = $fecha;
-
         return $this;
     }
-
     /**
      * Get fecha
      *
@@ -239,7 +204,6 @@ class Oferta
     {
         return $this->fecha;
     }
-
     /**
      * Set usuario
      *
@@ -250,10 +214,8 @@ class Oferta
     public function setUsuario($usuario)
     {
         $this->usuario = $usuario;
-
         return $this;
     }
-
     /**
      * Get usuario
      *
@@ -263,9 +225,6 @@ class Oferta
     {
         return $this->usuario;
     }
-
-
-
     /**
      * Set empresa
      *
@@ -276,10 +235,8 @@ class Oferta
     public function setEmpresa($empresa)
     {
         $this->empresa = $empresa;
-
         return $this;
     }
-
     /**
      * Get empresa
      *
@@ -289,7 +246,6 @@ class Oferta
     {
         return $this->empresa;
     }
-
     /**
      * Set estado
      *
@@ -300,10 +256,8 @@ class Oferta
     public function setEstado($estado)
     {
         $this->estado = $estado;
-
         return $this;
     }
-
     /**
      * Get estado
      *
@@ -313,7 +267,6 @@ class Oferta
     {
         return $this->estado;
     }
-
     /**
      * Set descripcion
      *
@@ -324,10 +277,8 @@ class Oferta
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
-
         return $this;
     }
-
     /**
      * Get descripcion
      *
@@ -337,8 +288,6 @@ class Oferta
     {
         return $this->descripcion;
     }
-
-
     /**
      * Set descripcionAlternativa
      *
@@ -349,10 +298,8 @@ class Oferta
     public function setDescripcionAlternativa($descripcionAlternativa)
     {
         $this->descripcionAlternativa = $descripcionAlternativa;
-
         return $this;
     }
-
     /**
      * Get descripcionAlternativa
      *
@@ -362,7 +309,6 @@ class Oferta
     {
         return $this->descripcionAlternativa;
     }
-
     /**
      * Set puestos
      *
@@ -373,10 +319,8 @@ class Oferta
     public function setPuestos($puestos)
     {
         $this->puestos = $puestos;
-
         return $this;
     }
-
     /**
      * Get puestos
      *
@@ -386,7 +330,6 @@ class Oferta
     {
         return $this->puestos;
     }
-
     /**
      * Set subCategoria
      *
@@ -397,10 +340,8 @@ class Oferta
     public function setSubCategoria($subCategoria)
     {
         $this->subCategoria = $subCategoria;
-
         return $this;
     }
-
     /**
      * Get subCategoria
      *
@@ -410,7 +351,6 @@ class Oferta
     {
         return $this->subCategoria;
     }
-
     /**
      * Set lugarCentroTrabajo
      *
@@ -421,10 +361,8 @@ class Oferta
     public function setLugarCentroTrabajo($lugarCentroTrabajo)
     {
         $this->lugarCentroTrabajo = $lugarCentroTrabajo;
-
         return $this;
     }
-
     /**
      * Get lugarCentroTrabajo
      *
@@ -434,7 +372,6 @@ class Oferta
     {
         return $this->lugarCentroTrabajo;
     }
-
     /**
      * Set pais
      *
@@ -445,10 +382,8 @@ class Oferta
     public function setPais($pais)
     {
         $this->pais = $pais;
-
         return $this;
     }
-
     /**
      * Get pais
      *
@@ -458,7 +393,6 @@ class Oferta
     {
         return $this->pais;
     }
-
         /**
      * Set localidad
      *
@@ -469,10 +403,8 @@ class Oferta
     public function setLocalidad($localidad)
     {
         $this->localidad = $localidad;
-
         return $this;
     }
-
     /**
      * Get localidad
      *
@@ -482,7 +414,6 @@ class Oferta
     {
         return $this->localidad;
     }
-
     /**
      * Set experienciaSector
      *
@@ -493,10 +424,8 @@ class Oferta
     public function setExperienciaSector($experienciaSector)
     {
         $this->experienciaSector = $experienciaSector;
-
         return $this;
     }
-
     /**
      * Get experienciaSector
      *
@@ -506,7 +435,6 @@ class Oferta
     {
         return $this->experienciaSector;
     }
-
     /**
      * Set experienciaMinima
      *
@@ -517,10 +445,8 @@ class Oferta
     public function setExperienciaMinima($experienciaMinima)
     {
         $this->experienciaMinima = $experienciaMinima;
-
         return $this;
     }
-
     /**
      * Get experienciaMinima
      *
@@ -530,7 +456,6 @@ class Oferta
     {
         return $this->experienciaMinima;
     }
-
     /**
      * Set minusvalia
      *
@@ -541,10 +466,8 @@ class Oferta
     public function setMinusvalia($minusvalia)
     {
         $this->minusvalia = $minusvalia;
-
         return $this;
     }
-
     /**
      * Get minusvalia
      *
@@ -554,7 +477,6 @@ class Oferta
     {
         return $this->minusvalia;
     }
-
     /**
      * Set beca
      *
@@ -565,10 +487,8 @@ class Oferta
     public function setBeca($beca)
     {
         $this->beca = $beca;
-
         return $this;
     }
-
     /**
      * Get beca
      *
@@ -578,7 +498,6 @@ class Oferta
     {
         return $this->beca;
     }
-
     /**
      * Set salario
      *
@@ -589,10 +508,8 @@ class Oferta
     public function setSalario($salario)
     {
         $this->salario = $salario;
-
         return $this;
     }
-
     /**
      * Get salario
      *
@@ -602,7 +519,6 @@ class Oferta
     {
         return $this->salario;
     }
-
     /**
      * Set idioma
      *
@@ -613,10 +529,8 @@ class Oferta
     public function setEstudios($estudios)
     {
         $this->estudios = $estudios;
-
         return $this;
     }
-
     /**
      * Get estudios
      *
@@ -626,7 +540,6 @@ class Oferta
     {
         return $this->estudios;
     }
-
     /**
      * Set tipoContrato
      *
@@ -637,10 +550,8 @@ class Oferta
     public function setTipoContrato($tipoContrato)
     {
         $this->tipoContrato = $tipoContrato;
-
         return $this;
     }
-
     /**
      * Get tipoContrato
      *
@@ -650,7 +561,6 @@ class Oferta
     {
         return $this->tipoContrato;
     }
-
     /**
      * Set jornadaLaboral
      *
@@ -661,10 +571,8 @@ class Oferta
     public function setJornadaLaboral($jornadaLaboral)
     {
         $this->jornadaLaboral = $jornadaLaboral;
-
         return $this;
     }
-
     /**
      * Get jornadaLaboral
      *
@@ -674,7 +582,6 @@ class Oferta
     {
         return $this->jornadaLaboral;
     }
-
      /**
      * Set beneficios
      *
@@ -685,10 +592,8 @@ class Oferta
     public function setBeneficios($beneficios)
     {
         $this->beneficios = $beneficios;
-
         return $this;
     }
-
     /**
      * Get beneficios
      *
@@ -698,8 +603,6 @@ class Oferta
     {
         return $this->beneficios;
     }
-
-
     /**
      * Set provincia
      *
@@ -710,10 +613,8 @@ class Oferta
     public function setProvincia(\OfertasBundle\Entity\ProvinciasOferta $provincia = null)
     {
         $this->provincia = $provincia;
-
         return $this;
     }
-
     /**
      * Get provincia
      *
@@ -723,7 +624,6 @@ class Oferta
     {
         return $this->provincia;
     }
-
     /**
      * Set categorias
      *
@@ -734,7 +634,6 @@ class Oferta
     public function setCategorias(\OfertasBundle\Entity\Categoria $categorias = null)
     {
         $this->categorias = $categorias;
-
         return $this;
     }
     /**
@@ -747,10 +646,8 @@ class Oferta
     public function setIdiomas(\OfertasBundle\Entity\Idioma $idioma = null)
     {
         $this->idiomas = $idioma;
-
         return $this;
     }
-
     /**
      * Get categorias
      *
@@ -760,7 +657,6 @@ class Oferta
     {
         return $this->categorias;
     }
-
     /**
      * Get idiomas
      *
@@ -770,7 +666,6 @@ class Oferta
     {
         return $this->idiomas;
     }
-
     /**
      * Constructor
      */
@@ -778,9 +673,7 @@ class Oferta
     {
         $this->categorias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idiomas = new \Doctrine\Common\Collections\ArrayCollection();
-
     }
-
     /**
      * Add categoria
      *
@@ -791,10 +684,8 @@ class Oferta
     public function addCategoria(\OfertasBundle\Entity\Categoria $categoria)
     {
         $this->categorias[] = $categoria;
-
         return $this;
     }
-
     /**
      * Remove categoria
      *
@@ -804,7 +695,6 @@ class Oferta
     {
         $this->categorias->removeElement($categoria);
     }
-
     /**
      * Add $idiomas
      *
@@ -815,10 +705,8 @@ class Oferta
     public function addIdiomas(\OfertasBundle\Entity\Idioma $idioma)
     {
         $this->idiomas[] = $idioma;
-
         return $this;
     }
-
     /**
      * Remove idioma
      *
@@ -828,7 +716,6 @@ class Oferta
     {
         $this->idiomas->removeElement($idioma);
     }
-
     private function DameUsuario($usuario){
         $Usuarios = $this->getDoctrine()->getRepository('UsuariosBundle:user');
         $empresa = $Usuarios->find($usuario)->getEmpresa();
@@ -836,9 +723,7 @@ class Oferta
         $Empresas = $this->getDoctrine()->getRepository('EmpresasBundle:Empresa');
         $empresa = $Empresas->find($empresa)->getNombre();
         $empresaAlt = $Empresas->find($empresa)->getNombre();
-
         return $usuario;
-
     }
     /**
          * @param Conocimiento $conocimiento
@@ -862,11 +747,36 @@ class Oferta
             $this->conocimiento->removeElement($conocimiento);
             $conocimiento->removeUser($this);
         }
-
-
+        
+ 
+        
+    public function DameOfertasEmpresa($empresa){
+    // Devuelve todas las Ofertas de una empresa determinada
+        $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
+        $consulta = $repository->createQueryBuilder('o')
+                ->where('o.empresa  = :empresa ')
+                ->setParameter('empresa', $empresa)
+                ->orderBy('o.fecha', 'DESC')
+             ->getQuery();
+            $ofertas = $consulta->getResult();
+    Return $ofertas;
+    }
+    
+    public function DameOfertasUsuarioEmpresaPorEstado($empresa,$tipo){
+        // Devielve sólo las ofertas de una empresa y según el estado indicado (tipo)
+        $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
+        $consulta = $repository->createQueryBuilder('o')
+                    ->where('o.empresa  = :empresa and o.estado  = :estado ')
+                    ->setParameter('empresa', $empresa)
+                    ->setParameter('estado', $tipo)
+                    ->orderBy('o.fecha', 'DESC')
+                 ->getQuery();
+                $ofertas = $consulta->getResult();
+        Return $ofertas;
+    }
+    
     function __toString()
     {
         return $this->provincia;
     }
-
 }
