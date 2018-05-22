@@ -40,7 +40,7 @@ class OfertaType extends AbstractType
                 ->add('experienciaSector', ChoiceType::class, array('label' => 'Se requiere experiencia en el sector',
                     'required'  => false,
                     'choices'  => array(
-                        'Yes' => true,
+                        'Sí' => true,
                         'No' => false,
                     )))
                 ->add('salario', EntityType::class, array(
@@ -53,7 +53,7 @@ class OfertaType extends AbstractType
                 ))
                 ->add('minusvalia',ChoiceType::class, array('label' => 'Minusvalía superior al 30%','required'  => false,
                     'choices'  => array(
-                        'Yes' => true,
+                        'Sí' => true,
                         'No' => false,
                     )))
                 ->add('jornadaLaboral', EntityType::class, array(
@@ -62,7 +62,7 @@ class OfertaType extends AbstractType
                 ))
                  ->add('beca',ChoiceType::class, array('label' => 'Beca','required'  => false,
                     'choices'  => array(
-                        'Yes' => true,
+                        'Sí' => true,
                         'No' => false,
                     )))
                   ->add('categorias',EntityType::class,array(
