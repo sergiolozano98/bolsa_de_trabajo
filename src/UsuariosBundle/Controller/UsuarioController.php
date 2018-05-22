@@ -19,8 +19,7 @@ class UsuarioController extends Controller
      */
     public function registerAction(Request $request)
     {
-        // $passwordEncoder = $this->get('security.password_encoder');
-        // 1) build the form
+        // Registrar usuario candidato
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         // 2) handle the submit (will only happen on POST)
@@ -40,12 +39,47 @@ class UsuarioController extends Controller
             $entityManager->flush();
         }
         return $this->render(
-            'usuarios/register.html.twig',
+            'UsuariosBundle:Default:register.html.twig',
             array('form' => $form->createView(),
           )
         );
     }
     
+    /**
+     * @Route("/NuevoUsuario/{empresa}", name="NuevoUsuario")
+     */
+    public function NuevoUsuarioEmpresaAction(Request $request, $empresa)
+    {
+        // Registrar usuario de empresa
+        $user = new User();
+        $Roles2='wwww';
+        $NombreEmpresa=$this -> DameNombreEmpresa($empresa);
+        $form = $this->createForm(UserType::class, $user);
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+        $authenticationUtils = $this->get('security.authentication_utils');
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($form->isSubmitted() && $form->isValid()) {
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $user->setEmpresa($empresa);
+            $Roles2 = $user->getRoles();
+            // $user->setRoles($roles);
+            // 4) save the User!
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($user);
+            // $entityManager->flush();
+        }
+        return $this->render(
+            'UsuariosBundle:Default:NUsuarioEmpresa.html.twig',
+            array('form'    => $form->createView(),
+                'empresa'   =>$NombreEmpresa,
+                'Roles2'    =>$Roles2
+          )
+        );
+    }    
     /**
     * @Route("/login", name="login")
     */
@@ -166,7 +200,7 @@ class UsuarioController extends Controller
     */
     public function empresa2Action(Request $request)
     {
-      $user = $this->get('security.token_storage')->getToken()->getUser();
+      
         $Empresa=$request->get("empresa");
         if ($Empresa>=1) {
             $empresa =$Empresa;
@@ -286,7 +320,7 @@ class UsuarioController extends Controller
     
     private function DameNombreEmpresa($id){
         return $this->getdoctrine()->getRepository('EmpresasBundle:Empresa')
-                ->find($id)>>getNombre();
+                ->find($id)->getNombre();
     }
     
     private function DameEmpresa($id){
