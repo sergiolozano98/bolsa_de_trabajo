@@ -130,6 +130,7 @@ class EmpresasController extends Controller
         $Oferta = $this->BuscaOfertasEmpresa($empresa->getId());
         $filas = count($Oferta);
         $Usuarios = $this->BuscaUsuariosEmpresa($empresa->getId());
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $busqueda= $form->getData();
             $cadena=$busqueda->getCampoBusqueda();
