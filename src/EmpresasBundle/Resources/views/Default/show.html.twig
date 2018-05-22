@@ -4,20 +4,22 @@
     
         <!-- Menú de Empresas --> 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-       
-      <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="{{ path('empresas_inicio') }}"></a>
-            <a class="btn btn-outline-primary" href="{{ path('empresa_listado') }}" >Volver al listado</a>
-            <a class="btn btn-outline-primary" href="{{ path('empresa_nueva') }}"> <i class="fa fa-pencil"></i> Crear una nueva empresa</a>
-      </nav>
-      <div class="my-5 my-md-0 mr-md-3">
+
+            
+        <nav class="my-2 my-md-0 mr-md-3">
+              <a class="p-2 text-dark" href="{{ path('login') }}"></a>
+              <a class="btn btn-outline-primary" href="{{ path('login') }}" >Volver a inicio</a>
+              <a class="btn btn-outline-primary" href="{{ path('empresa_nueva') }}"> <i class="fa fa-pencil"></i> Crear una nueva empresa</a>
+        </nav>
+        <hr>
         {{ form_start(busqueda) }}
-                <table>
-                    <div class="row"><div class="col-8 ">{{ form_widget(busqueda.campoBusqueda) }}</div><div class="col-8 ">{{ form_row(busqueda.Buscar) }} </div></div> 
-                </table>
+
+        <div class="row">{{ form_widget(busqueda.campoBusqueda, {'attr': {'class': 'btn-outline-primary'}}) }} {{ form_row(busqueda.Buscar, {'attr': {'class': 'btn  btn-outline-primary'}}) }} <hr></div>
+
         {{ form_end(busqueda) }}
-      </div>   
+ 
     </div>
+      {{ app.user.username }} 
      <div class="container">  
         <h1>{{ empresa.nombre }}</h1>
         <hr>
@@ -78,12 +80,16 @@
             </div>
         
             <div class="col-2">
-                <h3> Usuarios </h3>
-                
+                {% if is_granted('ROLE_ADMIN') %}
+                    <h3> Usuarios  <a class="btn btn-outline-primary" href="{{ path('NuevoUsuario', {'empresa': empresa.id }) }}" title="Nuevo usuario"><i class="fa fa-plus-circle"></i></a> </h3>
+                {% else %} 
+                    <h3> Usuarios </h3>
+                {% endif %}
                 
                   <ul class="list-unstyled mt-3 mb-4">
                     {% for usuario in usuarios %}
-                     <li> {{ usuario.nombre }}</li>
+                     <li> {{ usuario.nombre }} </li>
+
                     {% endfor %} 
                   </ul>
                  
