@@ -91,6 +91,11 @@ class User implements UserInterface
      */
     private $nif;
 
+     /**
+      * @ORM\OneToMany(targetEntity="Candidato", mappedBy="candidato")
+      */
+    private $candidatos;
+
     /**
      * Get id
      *

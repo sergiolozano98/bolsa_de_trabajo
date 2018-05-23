@@ -153,6 +153,11 @@ class Oferta
      * @ORM\JoinColumn(name="idiomas", referencedColumnName="id")
      */
     private $idiomas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UsuariosBundle\Entity\Candidato", mappedBy="ofertas")
+     */
+    private $oferta;
     /**
      * Get id
      *
@@ -747,9 +752,9 @@ class Oferta
             $this->conocimiento->removeElement($conocimiento);
             $conocimiento->removeUser($this);
         }
-        
- 
-        
+
+
+
     public function DameOfertasEmpresa($empresa){
     // Devuelve todas las Ofertas de una empresa determinada
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
@@ -761,7 +766,7 @@ class Oferta
             $ofertas = $consulta->getResult();
     Return $ofertas;
     }
-    
+
     public function DameOfertasUsuarioEmpresaPorEstado($empresa,$tipo){
         // Devielve sólo las ofertas de una empresa y según el estado indicado (tipo)
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
@@ -774,7 +779,7 @@ class Oferta
                 $ofertas = $consulta->getResult();
         Return $ofertas;
     }
-    
+
     function __toString()
     {
         return $this->provincia;
