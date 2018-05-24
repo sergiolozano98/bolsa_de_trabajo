@@ -103,18 +103,7 @@
             </div>
         {% endif %}
          <br>
-        {% if empresa >0  %}
-            Seleccione el usuario de la empresa a suplantar. 
-            <form action="/" method='POST'>
-                <select name="usuario"> 
-                 {% for Usuarios in ListadoUsuarios %}
-                     <option value="{{ Usuarios.id }}">{{ Usuarios.nombre }}</option>
-                 {% endfor %}
-                </select>
-                <input type="hidden" name="empresa" value="{{ empresa }}">
-                <button class="btn btn-outline-primary" type="submit">seleccionar </button>
-            </form>
-        {% else %}
+
             Seleccione empresa sobre la que trabajar 
             <form action="/empresa2" method='POST'>
                 <select name="empresa"> 
@@ -124,7 +113,7 @@
                 </select>
                 <button class="btn btn-outline-primary" type="submit">seleccionar </button>
             </form>
-        {% endif %}
+
         </div>
     </div>
   </div>
