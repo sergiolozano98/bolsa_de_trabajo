@@ -76,7 +76,7 @@
                 {% if oferta.categorias %}
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasActivas-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasActivas-down" class="imgcolexp"/>  
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasActivas-down" class="imgcolexp"/>
                 </div>
                     <div class="col-8 " id="CategoriasActivas">
                         {% for item in oferta.categorias %}
@@ -99,12 +99,18 @@
 
             <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white">
             <nav class="my-2 my-md-0 mr-md-3">
+            {% if Rol == 'ROLE_EDITOR' %}
                 {{ form_start(delete_form) }}
-                    <a class="btn btn-outline-primary" href="{{ path('oferta_index') }}">Volver a la lista</a>
+                    <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
                     <a class="btn btn-outline-primary" href="{{ path('oferta_edit', { 'id': oferta.id }) }}">Editar</a>
 
                         <input type="submit" value="Borrar" class="btn btn-outline-primary">
-                    {{ form_end(delete_form) }}
+                {{ form_end(delete_form) }}
+            {% endif %}
+            {% if Rol == 'ROLE_EMPRESA' %}
+                    <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
+            {% endif %}
+
             </nav>
             </div>
 
@@ -116,12 +122,12 @@
 $(document).ready(function(){
         // Ofertas Activas
         // oculta la segunda flecha y las ofertas. Estado inicial
-        
+
 	$("#FlechasActivas-up").css("display","none");
         $("#FlechasActivas-down").css("display","block");
         $("#CategoriasActivas").hide();
 
-        
+
 	$("#FlechasActivas-up,#FlechasActivas-down").click(function () {
 		$("#CategoriasActivas").slideToggle("slow");
 

@@ -107,6 +107,8 @@ class EmpresasController extends Controller
                     ->orderBy('e.nombre', 'ASC')
 
                     ->getQuery();  
+        } else {
+            $paso = dump($form->getErrors(true));
         }
         
         $empresas = $consulta->getResult(); 
@@ -130,7 +132,7 @@ class EmpresasController extends Controller
         $Oferta = $this->BuscaOfertasEmpresa($empresa->getId());
         $filas = count($Oferta);
         $Usuarios = $this->BuscaUsuariosEmpresa($empresa->getId());
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $busqueda= $form->getData();
             $cadena=$busqueda->getCampoBusqueda();
@@ -144,6 +146,7 @@ class EmpresasController extends Controller
                 $empresas = $consulta->getResult(); 
                 return $this->redirectToRoute('empresa_listado', array(
                     'busqueda'=>$form->createView(),
+                    'Rol' => $Roles,
                     'empresas' =>$empresas,
                     'buscar' =>$cadena,
                     'ofertas' =>$Oferta,
@@ -237,8 +240,8 @@ class EmpresasController extends Controller
     }
     
     public function BuscaUsuariosEmpresa($Id){
-        /* Obtiene las ofertas de la empresa */
-        
+        /* Obtiene los usuarios de la empresa los pasa a una matriz*/
+        $i=0;
         $repository = $this->getdoctrine()->getRepository('UsuariosBundle:User');
 
         $consulta = $repository->createQueryBuilder('e')
@@ -246,7 +249,15 @@ class EmpresasController extends Controller
             ->setParameter('empresa', $Id)
         ->getQuery();
         $Usuario = $consulta->getResult(); 
-        return $Usuario;
+        $datos = [];
+        foreach($Usuario as $u) {
+            $datos[$i]['id'] = $u->getid();
+            $datos[$i]['nombre'] = $u->getNombre();
+            $Roles = $u->getRoles();
+            $datos[$i]['rol'] = current($Roles);
+            $i++;
+        }
+        return $datos;
     }    
             
 }
