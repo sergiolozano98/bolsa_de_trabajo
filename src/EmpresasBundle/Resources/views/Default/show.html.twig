@@ -19,44 +19,44 @@
         {{ form_end(busqueda) }}
  
     </div>
-      {{ app.user.username }} 
+      
      <div class="container">  
         <h1>{{ empresa.nombre }}</h1>
         <hr>
         <div class="row">
-            <div class="col-10">
-                <div class="row col-md-8">
+            <div class="col-sm-8">
+                <div class="row ">
                     <div class="col-md-2 "> Descripción </div>
                     <div class="col-md-10 "> {{ empresa.descripcion }}<hr> </div>
                 </div>
                 
-                <div class="row  col-md-8">
+                <div class="row">
                     <div class="col-2 ">Dirección</div>
                     <div class="col-10 ">{{ empresa.direccion }} - {{ empresa.cP }} - {{ empresa.localidad }} - {{ empresa.pais }}</div>
                 </div>
-                <div class="row  col-md-8">
+                <div class="row ">
                     <div class="col-2 ">Teléfono</div>
                     <div class="col-10 ">{{ empresa.telefono }}</div>
                 </div>
-                <div class="row  col-md-8">
+                <div class="row ">
                     <div class="col-2 ">CIF</div>
                     <div class="col-10 ">{{ empresa.cIF }}</div>
                 </div>
-                <div class="row col-md-8">
+                <div class="row ">
                     <div class="col-2 ">Url</div>
                     <div class="col-10 "><a href="http://{{empresa.uRL }} " target="blanck">{{ empresa.uRL }}</a></div>
                 </div>
-                <div class="row col-md-8">
+                <div class="row ">
                     <div class="col-2 ">Correo</div>
                     <div class="col-10 "><a href="mailto://{{empresa.uRL }} " target="blanck">{{ empresa.correo }}</a></div>
                 </div>
-                <div class="row col-md-8">
+                <div class="row ">
                     <div class="col-2 ">Imagen</div>
                     <div class="col-10 ">{{ empresa.imagen }}</div>
                 </div>
                 {% set cadena =  empresa.observaciones %}
                 {% if cadena != '' %}
-                <div class="row  col-md-8">
+                <div class="row  ">
                     <div class="col-2 ">Observaciones</div>
                     <div class="col-10 ">{{ empresa.observaciones }}</div>
                 </div>
@@ -79,16 +79,27 @@
                 </div>
             </div>
         
-            <div class="col-2">
+            <div class="col-sm-4">
                 {% if is_granted('ROLE_ADMIN') %}
                     <h3> Usuarios  <a class="btn btn-outline-primary" href="{{ path('NuevoUsuario', {'empresa': empresa.id }) }}" title="Nuevo usuario"><i class="fa fa-plus-circle"></i></a> </h3>
                 {% else %} 
                     <h3> Usuarios </h3>
                 {% endif %}
                 
-                  <ul class="list-unstyled mt-3 mb-4">
+                  <ul class="list-unstyled mt-4 mb-5">
                     {% for usuario in usuarios %}
-                     <li> {{ usuario.nombre }} </li>
+                     <li> 
+                        {% if usuario.rol=='ROLE_EDITOR' %}
+                            <i class="fa fa-group"></i> 
+                        {% else %} 
+                            <i class="fa fa-male"></i> 
+                        {% endif %}
+                         {{ usuario.nombre }} 
+                            <a class="btn" href="{{ path('Muestra_Usuario', { 'id': usuario.id }) }}"> <i class="fa fa-edit"></i></a>
+                            {% if usuario.rol=='ROLE_EDITOR' %}
+                                <a class="btn" href="{{ path('Muestra_Usuario', { 'id': usuario.id }) }}"> <i class="fa fa-address-card"></i></a>
+                            {% endif %}  
+                     </li>
 
                     {% endfor %} 
                   </ul>
