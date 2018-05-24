@@ -1,6 +1,7 @@
 <?php
 namespace UsuariosBundle\Controller;
 use UsuariosBundle\Form\UserType;
+use UsuariosBundle\Form\UserEmpresaType;
 use UsuariosBundle\Entity\User;
 use EmpresasBundle\Entity\Empresa;
 use EmpresasBundle\Form\EmpresaType;
@@ -31,12 +32,15 @@ class UsuarioController extends Controller
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $user->setEmpresa(null);
+            //Usuario inserta empresa en Null
             $user->setRoles(["ROLE_CANDIDATO"]);
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // si el login es correcto se va al login
+            return $this->redirectToRoute('login');
         }
         return $this->render(
             'UsuariosBundle:Default:register.html.twig',
@@ -44,7 +48,7 @@ class UsuarioController extends Controller
           )
         );
     }
-    
+
     /**
      * @Route("/NuevoUsuario/{empresa}", name="NuevoUsuario")
      */
@@ -52,9 +56,9 @@ class UsuarioController extends Controller
     {
         // Registrar usuario de empresa
         $user = new User();
-        $Roles2='wwww';
+        $Roles2=["ROLE_PRUEBA"];
         $NombreEmpresa=$this -> DameNombreEmpresa($empresa);
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEmpresaType::class, $user);
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         $authenticationUtils = $this->get('security.authentication_utils');
@@ -64,13 +68,14 @@ class UsuarioController extends Controller
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+          $empresa =  $this->getdoctrine()->getRepository('EmpresasBundle:Empresa')
+                    ->find($empresa);
             $user->setEmpresa($empresa);
-            $Roles2 = $user->getRoles();
-            // $user->setRoles($roles);
             // 4) save the User!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($user);
-            // $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            
         }
         return $this->render(
             'UsuariosBundle:Default:NUsuarioEmpresa.html.twig',
@@ -79,7 +84,7 @@ class UsuarioController extends Controller
                 'Roles2'    =>$Roles2
           )
         );
-    }    
+    }
     /**
     * @Route("/login", name="login")
     */
@@ -120,7 +125,7 @@ class UsuarioController extends Controller
             'cadena'      => 'Ofertas'
           ));
     }
-      
+
     /**
     * @Route("/logout", name="logout")
     */
@@ -128,7 +133,7 @@ class UsuarioController extends Controller
     {
       return $this->render('UsuarioBundle:Default:index.html.twig');
     }
-      
+
      /**
      * Busca y muestra una oferta
      *
@@ -142,7 +147,7 @@ class UsuarioController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-    
+
     public function BuscaUsuarios($Id){
         $repository = $this->getdoctrine()->getRepository('UsuariosBundle:User');
         $consulta = $repository->createQueryBuilder('e')
@@ -152,14 +157,14 @@ class UsuarioController extends Controller
         $Usuario = $consulta->getResult();
         return $Usuario;
     }
-    
+
     /**
     * @Route("/empresa", name="empresa")
     */
     public function empresaAction(Request $request)
     {
       $user = $this->get('security.token_storage')->getToken()->getUser();
-        
+
         $Empresa=$request->get("empresa");
         if ($Empresa>=1) {
             $empresa =$Empresa;
@@ -168,7 +173,7 @@ class UsuarioController extends Controller
             $empresa =0;
             $ListadoUsuarios =0;
         }
-           
+
         // Lee el tipo de rol del usuario
         $RolUsuario=$user->getRoles();
         // Busca los datos del usuario registrado
@@ -194,13 +199,13 @@ class UsuarioController extends Controller
                     'Rol'               => $RolUsuario[0]
                     ));
     }
-    
+
     /**
     * @Route("/empresa2", name="empresa2")
     */
     public function empresa2Action(Request $request)
     {
-      
+
         $Empresa=$request->get("empresa");
         if ($Empresa>=1) {
             $empresa =$Empresa;
@@ -211,21 +216,21 @@ class UsuarioController extends Controller
             $empresa =0;
             $ListadoUsuarios =0;
         }
-           
- 
 
-            
+
+
+
     }
-    
-    
-    
-    
+
+
+
+
     /* **************************************************
      * Funciones privadas
      * **************************************************
      */
-    
-    
+
+
     private function MuestraInicioAdmin($user) {
         // Lee el tipo de rol del usuario
         $RolUsuario=$user->getRoles();
@@ -251,7 +256,7 @@ class UsuarioController extends Controller
                     'Rol'               => $RolUsuario[0]
                     ));
     }
-    
+
     private function MuestraInicioEmpresaEditor($user){
             // Lee el tipo de rol del usuario
             $RolUsuario=$user->getRoles();
@@ -279,7 +284,7 @@ class UsuarioController extends Controller
                     'Rol'               => $RolUsuario[0]
                     ));
     }
-    
+
     private function MuestraInicioEmpresaUsuario($user){
             // Lee el tipo de rol del usuario
             $RolUsuario=$user->getRoles();
@@ -305,7 +310,7 @@ class UsuarioController extends Controller
                     'Rol'               => $RolUsuario[0]
                     ));
     }
-    
+
     private function DameOfertas(){
        // Listado de ofertas activas
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
@@ -316,13 +321,13 @@ class UsuarioController extends Controller
                  ->getQuery();
                 $ofertas = $consulta->getResult();
         Return $ofertas;
-    }   
-    
+    }
+
     private function DameNombreEmpresa($id){
         return $this->getdoctrine()->getRepository('EmpresasBundle:Empresa')
                 ->find($id)->getNombre();
     }
-    
+
     private function DameEmpresa($id){
         return $this->getdoctrine()->getRepository('EmpresasBundle:Empresa')
                 ->find($id);
@@ -338,7 +343,7 @@ class UsuarioController extends Controller
 
         return $Listado;
     }
-    
+
     private function DameListadoUsuarioEmpresas($empresa){
         // Devuelve los usuarios asociados a una empresa, sólo id y nombre
         $repository = $this->getdoctrine()->getRepository('UsuariosBundle:User');
@@ -352,10 +357,10 @@ class UsuarioController extends Controller
 
         return $Listado;
     }
-    
 
-    
 
-    
+
+
+
 
 }

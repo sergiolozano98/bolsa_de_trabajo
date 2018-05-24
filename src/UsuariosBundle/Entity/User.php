@@ -55,16 +55,11 @@ class User implements UserInterface
     private $password;
 
     /**
-     */
+    * @Assert\NotBlank()
+    * @Assert\Length(max=4096)
+    */
      private $plainPassword;
-    /**
-     * @Assert\NotBlank()
-     *
-     * @Assert\Length(max=4096)
-     */
-    /*
-    // private $plainPassword;
-*/
+
     /**
     *
     * @ORM\Column(type="json_array")
@@ -72,8 +67,8 @@ class User implements UserInterface
     private  $roles  =  array ();
 
     /**
-     * @ORM\ManyToOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="nombre")
-     * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="user")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;
 
@@ -238,21 +233,18 @@ public function setPlainPassword($password)
    $this->plainPassword = $password;
 }
 
-
-
-    /**
-     * Set empresa
-     *
-     * @param string $empresa
-     *
-     * @return empresa
-     */
-    public function setEmpresa($empresa)
-    {
-        $this->empresa = $empresa;
-
-        return $this;
-    }
+/**
+ * Set empresa
+ *
+ * @param integer $usuario
+ *
+ * @return Oferta
+ */
+public function setEmpresa(\EmpresasBundle\Entity\Empresa $empresa)
+{
+    $this->empresa = $empresa;
+    return $this;
+}
 
     /**
      * Get EMPRESA
@@ -282,7 +274,7 @@ public function setPlainPassword($password)
     {
       return $this->roles;
      }
-    public function setRoles(array $roles)
+    public function setRoles($roles)
 {
     $this->roles = $roles;
 }

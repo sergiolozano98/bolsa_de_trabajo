@@ -24,7 +24,6 @@ class Empresa
     /**
     * @var string
      * @ORM\Column(name="Nombre", type="string", length=255, nullable=true)
-     * @ORM\OneToMany(targetEntity="UsuariosBundle\entity\User", mappedBy="empresa")
      */
     private $nombre;
 
@@ -118,6 +117,11 @@ class Empresa
      * @ORM\Column(name="Observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
+
+    /**
+    * @ORM\OneToMany(targetEntity="UsuariosBundle\Entity\User", mappedBy="empresa")
+     */
+    private $user;
 
 
     /**

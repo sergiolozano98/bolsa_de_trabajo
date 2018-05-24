@@ -9,6 +9,7 @@ use EmpresasBundle\Form\BusquedaType;
 
 use OfertasBundle\Entity\Oferta;
 use OfertasBundle\From\OfertaType;
+use OfertasBundle\From\OfertaEditType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,7 +81,7 @@ class OfertaController extends Controller
     public function editAction(Request $request, Oferta $oferta)
     {
         $deleteForm = $this->createDeleteForm($oferta);
-        $editForm = $this->createForm('OfertasBundle\Form\OfertaType', $oferta);
+        $editForm = $this->createForm('OfertasBundle\Form\OfertaEditType', $oferta);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -108,20 +109,20 @@ class OfertaController extends Controller
         $cadena = 'Ofertas';
         /* Consulta de datos ofertas */
         $repository = $this->getdoctrine()->getRepository('OfertasBundle:Oferta');
-        
+
         if ($BuscarForm->isSubmitted() && $BuscarForm->isValid()) {
             $busqueda= $BuscarForm->getData();
-            
+
 
             $cadena=$busqueda->getTitulo();
-           
-            
+
+
             $cadenaSalario=$busqueda->getSalario();
             $cadenaLocalidad=$busqueda->getLocalidad();
             $cadenaProvincia=$busqueda->getProvincia();
             $cadenaContrato=$busqueda->getTipoContrato();
             $cadenaJornada=$busqueda->getJornadaLaboral();
-            
+
 
 
              $consulta = $repository->createQueryBuilder('o')
@@ -129,40 +130,40 @@ class OfertaController extends Controller
                     ->orwhere(' o.descripcion like :cadena')
                     ->setParameter('cadena', '%' . $cadena. '%')
                     ->orderBy('o.fecha', 'DESC');
-             
+
             /* Añade la consulta de la localidad */
             if (strlen($cadenaLocalidad)>=1){
                 $criterio = Criteria::create()
-                ->andwhere(Criteria::expr()->contains('o.localidad',$cadenaLocalidad));  
+                ->andwhere(Criteria::expr()->contains('o.localidad',$cadenaLocalidad));
                 $consulta->addCriteria($criterio);
             }
             /* Añade la consulta de la provincia */
             if (strlen($cadenaProvincia)>=1){
                 $criterio = Criteria::create()
-                ->andwhere(Criteria::expr()->eq('o.provincia',$cadenaProvincia));  
+                ->andwhere(Criteria::expr()->eq('o.provincia',$cadenaProvincia));
                 $consulta->addCriteria($criterio);
             }
             /* Añade mla consulta del salario */
             if (strlen($cadenaSalario)>=1){
                 $criterio = Criteria::create()
-                ->andwhere(Criteria::expr()->eq('o.salario',$cadenaSalario));  
+                ->andwhere(Criteria::expr()->eq('o.salario',$cadenaSalario));
                 $consulta->addCriteria($criterio);
             }
-            
+
             /* Añade la consulta del Tipo de contrato */
             if (strlen($cadenaContrato)>=1){
                 $criterio = Criteria::create()
-                ->andwhere(Criteria::expr()->eq('o.tipoContrato',$cadenaContrato));  
+                ->andwhere(Criteria::expr()->eq('o.tipoContrato',$cadenaContrato));
                 $consulta->addCriteria($criterio);
             }
-              
+
             /* Añade la consulta del Tipo de jornada laboral */
             if (strlen($cadenaJornada)>=1){
                 $criterio = Criteria::create()
-                ->andwhere(Criteria::expr()->eq('o.jornadaLaboral',$cadenaJornada));  
+                ->andwhere(Criteria::expr()->eq('o.jornadaLaboral',$cadenaJornada));
                 $consulta->addCriteria($criterio);
             }
-            
+
             $Oferta =  $consulta->getQuery()->getResult();
             $filas = count($Oferta);
             return $this->render('OfertasBundle:Default:index.html.twig', array(
@@ -181,16 +182,16 @@ class OfertaController extends Controller
                 $Oferta = $consulta->getResult();
                 $filas = count($Oferta);
         }
-        
-        
+
+
 
         return $this->render('OfertasBundle:Default:buscar.html.twig', array(
             'ofertas' => $Oferta,
             'Buscar_form' => $BuscarForm->createView(),
             'cadena'=>  $cadena));
     }
-    
-    
+
+
 
 
 

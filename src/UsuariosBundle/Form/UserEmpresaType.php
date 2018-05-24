@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class UserType extends AbstractType
+class UserEmpresaType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -32,7 +32,10 @@ class UserType extends AbstractType
                 'type'              => PasswordType::class,
                 'first_options'     => array('label' => 'Contraseña'),
                 'second_options'    => array('label' => 'Repita contraseña')))
-              ->add('save', SubmitType::class, array('label' => 'Registrarse'))
+             ->add('Roles', ChoiceType::class, array( 'multiple' => true,'choices'  => array(
+                            'Editor'   => $editor,
+                            'Usuario'   => $user,
+                            'Admin'    => $admin)))
              ;
     }
 

@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-class OfertaType extends AbstractType
+class OfertaEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -67,13 +67,13 @@ class OfertaType extends AbstractType
                     )))
                   ->add('categorias',EntityType::class,array(
                       'class' => 'OfertasBundle:Categoria',
-                      'label' => 'Categoria',
+                      'label' => false,
                       'multiple' => true,
                       'expanded' => true
                   ))
                   ->add('idiomas',EntityType::class,array(
                       'class' => 'OfertasBundle:Idioma',
-                      'label' => 'Idiomas',
+                      'label' => false,
                       'multiple' => true,
                       'expanded' => true
                   ))
