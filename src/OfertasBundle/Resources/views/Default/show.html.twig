@@ -76,7 +76,7 @@
                 {% if oferta.categorias %}
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasActivas-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasActivas-down" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasActivas-down" class="imgcolexp"/>  
                 </div>
                     <div class="col-8 " id="CategoriasActivas">
                         {% for item in oferta.categorias %}
@@ -110,6 +110,10 @@
             {% if Rol == 'ROLE_EMPRESA' %}
                     <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
             {% endif %}
+            {% if Rol == 'ROLE_CANDIDATO' %}
+                    <a class="btn btn-outline-primary" href="javascript:window.history.go(-1);">Volver a la página anterior</a>
+                    <a class="btn btn-outline-primary" href="{{ path('login') }}">Inscribirse</a>
+            {% endif %}
 
             </nav>
             </div>
@@ -122,12 +126,12 @@
 $(document).ready(function(){
         // Ofertas Activas
         // oculta la segunda flecha y las ofertas. Estado inicial
-
+        
 	$("#FlechasActivas-up").css("display","none");
         $("#FlechasActivas-down").css("display","block");
         $("#CategoriasActivas").hide();
 
-
+        
 	$("#FlechasActivas-up,#FlechasActivas-down").click(function () {
 		$("#CategoriasActivas").slideToggle("slow");
 

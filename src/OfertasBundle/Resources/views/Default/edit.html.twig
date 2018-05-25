@@ -1,16 +1,11 @@
 {% extends 'basesimple.html.twig' %}
 
-{% block body %}
-<head>
-  <style media="screen">
-  .OfertasCategoria>label {
-      display: none;
-    }
-  </style>
-</head>
-        <!-- Menú de Ofertass -->
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
 
+
+{% block body %}
+        <!-- Menú de Ofertass --> 
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+       
       <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="{{ path('ofertas_inicio') }}"></a>
             <a class="btn btn-outline-primary" href="{{ path('ofertas_inicio') }}"><i class="fa fa-eye"></i> Ver ofertas</a>
@@ -20,8 +15,8 @@
       </nav>
 
     </div>
-
-    <div class="container">
+    
+    <div class="container"> 
         <div class=" bg-white border-bottom box-shadow">
 
             <h1>Edición de Oferta</h1>
@@ -47,64 +42,64 @@
                 <div class="col-4 "><b>Descripción oferta</b></div>
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasDescripcion-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasDescripcion-down" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasDescripcion-down" class="imgcolexp"/>  
                 </div>
-                <div class="col-8 " id="OfertasDescripcion">
+                <div class="col-8 " id="OfertasDescripcion">                
                     {{ form_widget(edit_form.descripcion) }}
                     <div class="col-8 form_row">
                         <b>{{ form_label(edit_form.puestos) }}</b> {{ form_widget(edit_form.puestos) }}
-                    </div>
+                    </div>   
                     <div class="col-8 form_row">
                         <b>{{ form_label(edit_form.tipoContrato) }}</b> {{ form_widget(edit_form.tipoContrato) }}
-                    </div>
+                    </div>  
                       <div class="col-8 form_row">
                         <b>{{ form_label(edit_form.jornadaLaboral) }}</b> {{ form_widget(edit_form.jornadaLaboral) }}
-                    </div>
-                </div>
+                    </div> 
+                </div>                   
             </div>
             <div class="row">
                 <div class="col-4 "><b>Opciones</b></div>
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasOpcion-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasOpcion-down" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasOpcion-down" class="imgcolexp"/>  
                 </div>
-                <div class="col-10 " id="OfertasOpcion">
+                <div class="col-10 " id="OfertasOpcion">  
                     <div class="form_row">
                          <b>{{ form_label(edit_form.salario) }}</b> {{ form_widget(edit_form.salario) }}
-                    </div>
+                    </div>    
                      <div class="form_row">
                          <div>
-                            <b>{{ form_label(edit_form.experienciaSector) }}</b>
-                       </div>
-                       <div class="col-8">
+                            <b>{{ form_label(edit_form.experienciaSector) }}</b> 
+                       </div> 
+                       <div class="col-8"> 
                             {{ form_widget(edit_form.experienciaSector) }}<br>
-                       </div>
+                       </div> 
                      </div>
-                      <br>
-                    <div class="form_row">
+                      <br> 
+                    <div class="form_row">  
                         <div>
-                            <b>{{ form_label(edit_form.experienciaMinima) }}</b>
-                        </div>
-                        <div class="col-8">
+                            <b>{{ form_label(edit_form.experienciaMinima) }}</b> 
+                        </div> 
+                        <div class="col-8"> 
                              {{ form_widget(edit_form.experienciaMinima) }}
-                        </div>
+                        </div>   
                     </div>
                         <div class="form_row">
-                           <b>{{ form_label(edit_form.beca) }}</b>
-                        </div>
-                        <div class="col-8">
+                           <b>{{ form_label(edit_form.beca) }}</b> 
+                        </div> 
+                        <div class="col-8"> 
                             {{ form_widget(edit_form.beca) }}
-                    </div>
+                    </div>    
                      <div class="col-8">
                          <b>{{ form_label(edit_form.minusvalia) }}</b> {{ form_widget(edit_form.minusvalia) }}
-                    </div>
+                    </div>   
                 </div>
             </div>
             <div class="row">
                 <div class="col-4 "><b>Ubicación</b></div>
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasDireccion-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasDireccion-down" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasDireccion-down" class="imgcolexp"/>  
                 </div>
                 <div class="col-8 " id="OfertasDireccion">
 
@@ -116,50 +111,47 @@
                      </div>
                     <div class="form_row">
                          <b>{{ form_label(edit_form.localidad) }}</b> {{ form_widget(edit_form.localidad) }}
-                     </div>
+                     </div>                
                      <div class="form_row">
                          <b>{{ form_label(edit_form.pais) }}</b> {{ form_widget(edit_form.pais) }}
                      </div>
-                </div>
+                </div>    
             </div>
             <div class="row">
                 <div class="col-4 "><b>Categorías</b></div>
                 <div>
                     <img src="/imagenes/up.png" width=16px; id="FlechasCategorias-up" class="imgcolexp"/>
-                    <img src="/imagenes/down.png"  width=16px; id="FlechasCategorias-down" class="imgcolexp"/>
+                    <img src="/imagenes/down.png"  width=16px; id="FlechasCategorias-down" class="imgcolexp"/>  
                 </div>
                 <div class="col-8 " id="OfertasCategoria">
-                    {{ form_row(edit_form.categorias) }}
+                    <b>{{ form_row(edit_form.categorias) }}<br>
                 </div>
             </div>
             <div class="form_row">
-              <div class="col-4 "><b>Idiomas</b></div>
-              <div class="col-8">
-                  {{ form_row(edit_form.idiomas) }}
-              </div>
+                <b>{{ form_row(edit_form.idiomas) }}
             </div>
                 <center><input class="btn btn-outline-primary" type="submit" value="Guardar" /></center>
-
+                
             {{ form_end(edit_form) }}
-
+            
         </div>
             <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-            <nav class="my-2 my-md-0 mr-md-3">
+            <nav class="my-2 my-md-0 mr-md-3">        
                     <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
                     <a class="btn btn-outline-primary" href="{{ path('oferta_index') }}"><i class="fa fa-copy"></i> Duplicar Oferta</a>
                     <a class="btn btn-outline-primary" href="{{ path('oferta_buscar') }}"> <i class="fa fa-search"></i> Buscar oferta</a>
             </nav>
             </div>
-
+        
     </div>
-
+            
 {% endblock %}
 {% block javascripts %}
 <script>
 $(document).ready(function(){
-        // Ofertas
+        // Ofertas 
         // oculta la segunda flecha y las ofertas. Estado inicial
-
+        
 	$("#FlechasDescripcion-up").css("display","none");
         $("#FlechasDescripcion-down").css("display","block");
         $("#OfertasDescripcion").hide();
@@ -200,7 +192,7 @@ $(document).ready(function(){
 			$("#FlechasOpcion-up").css("display","block");
 			$("#FlechasOpcion-down").css("display","none");
 		}
-	});
+	});        
 	$("#FlechasDireccion-up,#FlechasDireccion-down").click(function () {
 		$("#OfertasDireccion").slideToggle("slow");
 
@@ -215,7 +207,7 @@ $(document).ready(function(){
 			$("#FlechasDireccion-down").css("display","none");
 		}
 	});
-
+        
 	$("#FlechasCategorias-up,#FlechasCategorias-down").click(function () {
 		$("#OfertasCategoria").slideToggle("slow");
 
