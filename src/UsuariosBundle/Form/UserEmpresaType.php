@@ -1,7 +1,5 @@
 <?php
-
 namespace UsuariosBundle\Form;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +24,7 @@ class UserEmpresaType extends AbstractType
         $builder
             ->add('email', EmailType::class, array('label' => 'Correo electrónico'))
             ->add('nombre', TextType::class, array('label' => 'Nombre'))
-            ->add('username', TextType::class, array('label' => 'Username'))
+            ->add('username', hiddenType::class, array('label' => 'Username','data' => 'abcdef',))
             ->add('nif', TextType::class, array('label' => 'NIF'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type'              => PasswordType::class,
@@ -38,7 +36,6 @@ class UserEmpresaType extends AbstractType
                             'Admin'    => $admin)))
              ;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -48,9 +45,6 @@ class UserEmpresaType extends AbstractType
             'data_class' => 'UsuariosBundle\Entity\User'
         ));
     }
-
-
-
     /**
      * {@inheritdoc}
      */
@@ -58,6 +52,4 @@ class UserEmpresaType extends AbstractType
     {
         return 'usuariosbundle_user';
     }
-
-
 }
