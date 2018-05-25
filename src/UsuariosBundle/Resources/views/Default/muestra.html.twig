@@ -26,6 +26,15 @@
                          <div class="form_row">
                             {{ form_widget(form.plainPassword) }}
                         </div> 
+                       {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_EDITOR')) %}
+                            <div class="form_row">
+                                {{ form_row(form.Roles) }}
+                            </div> 
+                        {% else %}
+                            <div class="form_row">
+                                {{ form_row(form.Roles, { 'attr': {'class': 'hidden-row'} } ) }}
+                            </div> 
+                        {% endif %}
                     </div>
                 </div>
             <div class="row" style="background-color: rgba(0, 0, 0, 0.5);">

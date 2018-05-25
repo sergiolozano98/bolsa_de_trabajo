@@ -99,6 +99,12 @@
                             {% if usuario.rol=='ROLE_EDITOR' %}
                                 <a class="btn" href="{{ path('Muestra_Usuario', { 'id': usuario.id }) }}"> <i class="fa fa-address-card"></i></a>
                             {% endif %}  
+                            {% if usuario.validado %}
+                                
+                            {% else %} 
+                                <a class="btn" href="{{ path('Muestra_Usuario', { 'id': usuario.id }) }}" title="Validar usuario"> <i class="fa fa-check"></i></a>
+                            {% endif %}  
+                            
                      </li>
 
                     {% endfor %} 

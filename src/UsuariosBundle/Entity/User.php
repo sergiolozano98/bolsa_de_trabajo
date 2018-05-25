@@ -1,20 +1,14 @@
 <?php
-
 namespace UsuariosBundle\Entity;
-
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 /**
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email ya está registrado")
  * @UniqueEntity(fields="username", message="Nombre de usuario ya existe")
  */
-
-
 /**
  * User
  *
@@ -31,7 +25,6 @@ class User implements UserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      * @Assert\NotBlank()
@@ -39,59 +32,59 @@ class User implements UserInterface
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
-
     /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
-
     /**
      * @var string
      *
      * @ORM\Column(name="Password", type="string", length=64)
      */
     private $password;
-
     /**
     * @Assert\NotBlank()
     * @Assert\Length(max=4096)
     */
      private $plainPassword;
-
     /**
     *
     * @ORM\Column(type="json_array")
     */
     private  $roles  =  array ();
-
     /**
      * @ORM\ManyToOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="user")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
     private $empresa;
-
      /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="Nombre", type="string", length=255)
      */
     private $nombre;
-
     /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="NIF", type="string", length=10)
      */
     private $nif;
-
      /**
       * @ORM\OneToMany(targetEntity="Candidato", mappedBy="candidato")
       */
     private $candidatos;
 
-    /**
+    
+     /**
+     * @var bool
+     *
+     * @ORM\Column(name="Validado", type="boolean")
+     */
+    private $validado;
+    
+     /**
      * Get id
      *
      * @return int
@@ -100,7 +93,6 @@ class User implements UserInterface
     {
         return $this->id;
     }
-
     /**
      * Set email
      *
@@ -111,10 +103,8 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
-
     /**
      * Get email
      *
@@ -124,7 +114,6 @@ class User implements UserInterface
     {
         return $this->email;
     }
-
     /**
      * Set username
      *
@@ -135,10 +124,8 @@ class User implements UserInterface
     public function setUsername($username)
     {
         $this->username = $username;
-
         return $this;
     }
-
     /**
      * Get username
      *
@@ -148,7 +135,6 @@ class User implements UserInterface
     {
         return $this->username;
     }
-
      /**
      * Set nombre
      *
@@ -159,10 +145,8 @@ class User implements UserInterface
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
         return $this;
     }
-
     /**
      * Get nombre
      *
@@ -172,7 +156,6 @@ class User implements UserInterface
     {
         return $this->nombre;
     }
-
     /**
      * Set nif
      *
@@ -183,10 +166,8 @@ class User implements UserInterface
     public function setNif($nif)
     {
         $this->nif = $nif;
-
         return $this;
     }
-
     /**
      * Get nif
      *
@@ -196,8 +177,6 @@ class User implements UserInterface
     {
         return $this->nif;
     }
-
-
      /**
      * Set password
      *
@@ -205,20 +184,40 @@ class User implements UserInterface
      *
      * @return User
      */
-
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
-
+    
+    
+     /**
+     * Set validado
+     *
+     * @param boolean $validado
+     *
+     * @return User
+     */
+    public function setValidado($validado)
+    {
+        $this->validado = $validado;
+        return $this;
+    }
+    /**
+     * Get validado
+     *
+     * @return bool
+     */
+    public function getValidado()
+    {
+        return $this->validado;
+    }
+    
     /**
      * Get password
      *
      * @return string
      */
-
     public function getPassword()
     {
         return $this->password;
@@ -227,12 +226,10 @@ class User implements UserInterface
 {
    return $this->plainPassword;
 }
-
 public function setPlainPassword($password)
 {
    $this->plainPassword = $password;
 }
-
 /**
  * Set empresa
  *
@@ -245,7 +242,6 @@ public function setEmpresa(\EmpresasBundle\Entity\Empresa $empresa)
     $this->empresa = $empresa;
     return $this;
 }
-
     /**
      * Get EMPRESA
      *
@@ -255,28 +251,20 @@ public function setEmpresa(\EmpresasBundle\Entity\Empresa $empresa)
     {
         return $this->empresa;
     }
-
-
-
-
     public function getSalt()
     {
         // The bcrypt and argon2i algorithms don't require a separate salt.
         // You *may* need a real salt if you choose a different encoder.
         return null;
     }
-
     public function eraseCredentials() {
-
     }
-
     public function getRoles()
     {
       return $this->roles;
      }
     public function setRoles($roles)
-{
-    $this->roles = $roles;
-}
-
+    {
+        $this->roles = $roles;
+    }
 }

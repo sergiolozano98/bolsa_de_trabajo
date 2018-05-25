@@ -120,7 +120,11 @@
 
 
                     <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
-
+            {% endif %}
+            {% if Rol == 'ROLE_CANDIDATO' %}
+                    <a class="btn btn-outline-primary" href="javascript:window.history.go(-1);">Volver a la página anterior</a>
+                    <a class="btn btn-outline-primary" href="{{ path('login') }}">Inscribirse</a>
+            {% endif %}
 
             </nav>
             </div>
