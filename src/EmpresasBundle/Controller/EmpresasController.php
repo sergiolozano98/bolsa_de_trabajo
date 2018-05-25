@@ -253,6 +253,7 @@ class EmpresasController extends Controller
         foreach($Usuario as $u) {
             $datos[$i]['id'] = $u->getid();
             $datos[$i]['nombre'] = $u->getNombre();
+            $datos[$i]['validado'] = $u->getValidado();
             $Roles = $u->getRoles();
             $datos[$i]['rol'] = current($Roles);
             $i++;
