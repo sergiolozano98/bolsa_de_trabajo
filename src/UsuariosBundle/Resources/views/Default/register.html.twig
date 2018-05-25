@@ -1,11 +1,39 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 {% form_theme form 'EmpresasBundle:Form:fields.html.twig' %}
-
-        <div class="parallax" style="height: 500px;">
+    
+        <div class="parallax">
             <div class="col-sm-12 col-12 ">
             Nuevo usuario
                 {{ form_start(form) }}
+                <div class="row" style="background-color: rgba(0, 0, 0, 0.5);">
+                     
+                    <div  class="col-sm-6">
+                        <div class="form_row">
+                            <b>{{ form_label(form.email) }}</b>
+                            {{ form_widget(form.email) }}
+                        </div>
+                        <div class="form_row">
+                            <b>{{ form_label(form.nombre) }}</b>
+                            {{ form_widget(form.nombre) }}
+                        </div>                    
+                        <div class="form_row">
+                            <b>{{ form_label(form.nif) }}</b>
+                            {{ form_widget(form.nif) }}
+                        </div>       
+                    </div>
+                    <div class="col-sm-6">
+                         <div class="form_row">
+                            {{ form_widget(form.plainPassword) }}
+                        </div> 
+                    </div>
+                </div>
+            <div class="row" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="col-sm-12">
+                    <center><input class="btn btn-outline-primary" type="submit" value="Registrar" /></center>
+                    <br>
+                </div>
+            </div>
                 {{ form_end(form) }}
             </div>
         </div>
