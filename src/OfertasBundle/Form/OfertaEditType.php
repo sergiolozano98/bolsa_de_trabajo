@@ -77,6 +77,18 @@ class OfertaEditType extends AbstractType
                       'multiple' => true,
                       'expanded' => true
                   ))
+                  ->add('estudios',EntityType::class,array(
+                      'class' => 'OfertasBundle:Estudios',
+                      'label' => false,
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
+                  ->add('conocimientos',EntityType::class,array(
+                      'class' => 'OfertasBundle:Conocimientos',
+                      'label' => false,
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
                 ;
     }
     /**

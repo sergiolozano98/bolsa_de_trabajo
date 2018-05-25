@@ -42,10 +42,7 @@ class Oferta
      * @ORM\JoinColumn(name="Empresa", referencedColumnName="id")
      */
     private $empresa;
-    /**
-    * @ORM\OneToMany(targetEntity="Estudios", mappedBy="oferta")
-    */
-    private $estudios;
+
     /**
      * @ORM\ManytoOne(targetEntity="Estado", inversedBy="oferta")
      * @ORM\JoinColumn(name="estado", referencedColumnName="id")
@@ -153,6 +150,18 @@ class Oferta
      * @ORM\JoinColumn(name="idiomas", referencedColumnName="id")
      */
     private $idiomas;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Estudios", inversedBy="ofertas")
+     * @ORM\JoinColumn(name="estudios", referencedColumnName="id")
+     */
+    private $estudios;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Conocimientos", inversedBy="ofertas")
+     * @ORM\JoinColumn(name="conocimientos", referencedColumnName="id")
+     */
+    private $conocimientos;
 
     /**
      * @ORM\OneToMany(targetEntity="UsuariosBundle\Entity\Candidato", mappedBy="ofertas")
@@ -731,16 +740,26 @@ class Oferta
         return $usuario;
     }
     /**
-         * @param Conocimiento $conocimiento
-         */
-        public function addConocimiento(Conocimiento $conocimiento)
-        {
-            if ($this->conocimiento->contains($conocimiento)) {
-                return;
-            }
-            $this->conocimiento->add($conocimiento);
-            $conocimiento->addUser($this);
-        }
+     * Set idioma
+     *
+     * @param integer $idioma
+     *
+     * @return Idioma
+     */
+    public function setConocimientos($conocimiento)
+    {
+        $this->conocimientos = $conocimiento;
+        return $this;
+    }
+    /**
+     * Get estudios
+     *
+     * @return int
+     */
+    public function getConocimientos()
+    {
+        return $this->conocimientos;
+    }
         /**
          * @param Conocimiento $conocimiento
          */

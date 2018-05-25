@@ -71,9 +71,23 @@ class OfertaType extends AbstractType
                       'multiple' => true,
                       'expanded' => true
                   ))
+                  ->add('subCategoria', TextType::class, array('label' => 'SubCategoria','required'  => false))
+                  ->add('beneficios', TextType::class, array('label' => 'beneficios','required'  => false))
                   ->add('idiomas',EntityType::class,array(
                       'class' => 'OfertasBundle:Idioma',
                       'label' => 'Idiomas',
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
+                  ->add('estudios',EntityType::class,array(
+                      'class' => 'OfertasBundle:Estudios',
+                      'label' => 'Estudios',
+                      'multiple' => true,
+                      'expanded' => true
+                  ))
+                  ->add('conocimientos',EntityType::class,array(
+                      'class' => 'OfertasBundle:Conocimientos',
+                      'label' => 'Conocimiento',
                       'multiple' => true,
                       'expanded' => true
                   ))

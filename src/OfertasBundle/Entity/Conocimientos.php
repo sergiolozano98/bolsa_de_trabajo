@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="conocimientos")
  * @ORM\Entity(repositoryClass="OfertasBundle\Repository\ConocimientosRepository")
  */
-class Conocimiento
+class Conocimientos
 {
     /**
      * @var int
@@ -52,6 +52,11 @@ class Conocimiento
      * @ORM\Column(name="nivel")
      */
     private $nivel;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Oferta", mappedBy="conocimientos")
+    */
+   protected $ofertas;
 
 
     /**
@@ -159,6 +164,41 @@ class Conocimiento
     {
         return $this->nivel;
     }
+
+    /**
+     * Add oferta
+     *
+     * @param \OfertasBundle\Entity\Oferta $oferta
+     *
+     * @return Categoria
+     */
+    public function addOferta(\OfertasBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas[] = $oferta;
+
+        return $this;
+    }
+
+    /**
+     * Remove oferta
+     *
+     * @param \OfertasBundle\Entity\Oferta $oferta
+     */
+    public function removeOferta(\OfertasBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas->removeElement($oferta);
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
+    }
+
 
     function __toString()
     {

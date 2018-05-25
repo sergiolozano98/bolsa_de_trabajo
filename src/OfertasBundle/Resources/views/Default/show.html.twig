@@ -87,6 +87,17 @@
             </div>
 
             <div class="row">
+                <div class="col-4 ">Estudios</div>
+                {% if oferta.estudios %}
+                    <div class="col-8 " id="CategoriasActivas">
+                        {% for item in oferta.estudios %}
+                          {{ item }} ,
+                        {%endfor%}
+                    </div>
+                {%endif%}
+            </div>
+
+            <div class="row">
                 <div class="col-2 ">Idiomas</div>
                 {% if oferta.idiomas %}
                   <div class="col-8 ">
@@ -99,17 +110,17 @@
 
             <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white">
             <nav class="my-2 my-md-0 mr-md-3">
-            {% if Rol == 'ROLE_EDITOR' %}
+
                 {{ form_start(delete_form) }}
                     <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
                     <a class="btn btn-outline-primary" href="{{ path('oferta_edit', { 'id': oferta.id }) }}">Editar</a>
 
                         <input type="submit" value="Borrar" class="btn btn-outline-primary">
                 {{ form_end(delete_form) }}
-            {% endif %}
-            {% if Rol == 'ROLE_EMPRESA' %}
+
+
                     <a class="btn btn-outline-primary" href="{{ path('login') }}">Volver</a>
-            {% endif %}
+
 
             </nav>
             </div>

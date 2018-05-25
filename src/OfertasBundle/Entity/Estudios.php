@@ -24,10 +24,9 @@ class Estudios
     private $id;
 
     /**
-     * @ORM\ManytoOne(targetEntity="Oferta", inversedBy="idioma")
-     * @ORM\JoinColumn(name="oferta_id", referencedColumnName="id")
-     */
-    private $oferta;
+    * @ORM\ManyToMany(targetEntity="Oferta", mappedBy="idiomas")
+    */
+   protected $ofertas;
 
     /**
      * @var boolean
@@ -46,9 +45,9 @@ class Estudios
     /**
      * @var string
      *
-     * @ORM\Column(name="nivel")
+     * @ORM\Column(name="estudio")
      */
-    private $nivel;
+    private $estudio;
 
     /**
      * Set requerido
@@ -99,27 +98,27 @@ class Estudios
     }
 
     /**
-     * Set $nivel
+     * Set $estudio
      *
-     * @param string $nivel
+     * @param string $estudio
      *
-     * @return nivel
+     * @return estudio
      */
-    public function setNivel($nivel)
+    public function setestudio($estudio)
     {
-        $this->nivel = $nivel;
+        $this->estudio = $estudio;
 
         return $this;
     }
 
     /**
-     * Get $nivel
+     * Get $estudio
      *
      * @return string
      */
-    public function getNivel()
+    public function getestudio()
     {
-        return $this->nivel;
+        return $this->estudio;
     }
 
 
@@ -157,9 +156,45 @@ class Estudios
         return $this->estado;
     }
 
+
+        /**
+         * Add oferta
+         *
+         * @param \OfertasBundle\Entity\Oferta $oferta
+         *
+         * @return Categoria
+         */
+        public function addOferta(\OfertasBundle\Entity\Oferta $oferta)
+        {
+            $this->ofertas[] = $oferta;
+
+            return $this;
+        }
+
+        /**
+         * Remove oferta
+         *
+         * @param \OfertasBundle\Entity\Oferta $oferta
+         */
+        public function removeOferta(\OfertasBundle\Entity\Oferta $oferta)
+        {
+            $this->ofertas->removeElement($oferta);
+        }
+
+        /**
+         * Get ofertas
+         *
+         * @return \Doctrine\Common\Collections\Collection
+         */
+        public function getOfertas()
+        {
+            return $this->ofertas;
+        }
+
+
     function __toString()
     {
-        return $this->estado;
+        return $this->estudio;
     }
 
 }

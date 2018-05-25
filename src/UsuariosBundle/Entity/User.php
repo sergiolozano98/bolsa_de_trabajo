@@ -68,7 +68,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="EmpresasBundle\Entity\Empresa", inversedBy="user")
-     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
     private $empresa;
 
