@@ -28,6 +28,11 @@ class Categoria
      */
     private $categoria;
 
+    /**
+    * @ORM\OneToMany(targetEntity="\UsuariosBundle\Entity\Categorias", mappedBy="id_Categoria")
+    */
+    private $categorias;
+
      /**
      * @ORM\ManyToMany(targetEntity="Oferta", mappedBy="categorias")
      */

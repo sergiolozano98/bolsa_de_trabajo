@@ -122,6 +122,10 @@ class Empresa
     * @ORM\OneToMany(targetEntity="UsuariosBundle\Entity\User", mappedBy="empresa")
      */
     private $user;
+    /**
+    * @ORM\OneToMany(targetEntity="UsuariosBundle\Entity\Curriculum", mappedBy="provincia")
+    */
+    private $curriculums;
 
 
     /**

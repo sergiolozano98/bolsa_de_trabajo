@@ -54,6 +54,11 @@ class Idioma
     */
    protected $ofertas;
 
+   /**
+   * @ORM\OneToMany(targetEntity="\UsuariosBundle\Entity\Idiomas", mappedBy="Idioma")
+   */
+   private $idiomas;
+
 
 
     /**

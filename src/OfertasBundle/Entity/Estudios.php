@@ -50,6 +50,11 @@ class Estudios
     private $estudio;
 
     /**
+    * @ORM\OneToMany(targetEntity="\OfertasBundle\Entity\Estudios", mappedBy="id_Estudios")
+    */
+    private $estudios;
+
+    /**
      * Set requerido
      *
      * @param boolean $requerido

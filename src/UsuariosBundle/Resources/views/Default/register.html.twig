@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 {% form_theme form 'EmpresasBundle:Form:fields.html.twig' %}
-    
+
         <div class="parallax">
             <div class="col-sm-12 col-12 ">
             Nuevo usuario
                 {{ form_start(form) }}
                 <div class="row" style="background-color: rgba(0, 0, 0, 0.5);">
-                     
+
                     <div  class="col-sm-6">
                         <div class="form_row">
                             <b>{{ form_label(form.email) }}</b>
@@ -20,12 +20,12 @@
                         <div class="form_row">
                             <b>{{ form_label(form.nif) }}</b>
                             {{ form_widget(form.nif) }}
-                        </div>       
+                        </div>
                     </div>
                     <div class="col-sm-6">
                          <div class="form_row">
                             {{ form_widget(form.plainPassword) }}
-                        </div> 
+                        </div>
                     </div>
                 </div>
             <div class="row" style="background-color: rgba(0, 0, 0, 0.5);">

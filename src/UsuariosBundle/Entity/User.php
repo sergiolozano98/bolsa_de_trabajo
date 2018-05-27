@@ -76,14 +76,42 @@ class User implements UserInterface
       */
     private $candidatos;
 
-    
+    /**
+    * @ORM\OneToMany(targetEntity="Curriculum", mappedBy="id_candidato")
+    */
+    private $curriculums;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Experiencias", mappedBy="id_candidato")
+    */
+    private $experiencias;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Estudios", mappedBy="id_candidato")
+    */
+    private $estudios;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Recomendaciones", mappedBy="id_candidato")
+    */
+    private $recomendaciones;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Recomendaciones", mappedBy="id_UsuarioEmpresas")
+    */
+    private $usuariosempresas;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Categorias", mappedBy="id_Candidato")
+    */
+    private $categorias;
      /**
      * @var bool
      *
      * @ORM\Column(name="Validado", type="boolean")
      */
     private $validado;
-    
+
      /**
      * Get id
      *
@@ -189,8 +217,8 @@ class User implements UserInterface
         $this->password = $password;
         return $this;
     }
-    
-    
+
+
      /**
      * Set validado
      *
@@ -212,7 +240,7 @@ class User implements UserInterface
     {
         return $this->validado;
     }
-    
+
     /**
      * Get password
      *
